@@ -1,5 +1,3 @@
-# Projektx
-
 
 Projektvorschläge
 - Convay's Game of Life
