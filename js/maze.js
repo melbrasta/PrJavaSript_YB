@@ -24,11 +24,13 @@ function createMaze( grid ) {
 
 	field_array[current_coord.y][current_coord.x] = new Field( current_field );
 
-	let start_field = field_array[current_coord.y][current_coord.x];
+	start_field = field_array[current_coord.y][current_coord.x];		//vllt als var speichern??
 
 	field_array[current_coord.y][current_coord.x].setStart();
 	visited_fields.push( current_field );
 	stack.push( current_field );
+
+
 
 
 
@@ -86,7 +88,7 @@ function createMaze( grid ) {
 		let target_x = Math.max( current_coord.x, target_coord.x );
 		let target_y = Math.max( current_coord.y, target_coord.y );
 
-		grid.ctx.fillStyle="#ffffff";
+		grid.ctx.fillStyle="#000000";					//Farbe vom Spielfeld vllt Schwarz besser?
 
 		//
 		// Überzeichnet die Rechtecke und stellt grafisch die Verbindungen der einzelnen Felder dar
@@ -127,6 +129,8 @@ function createMaze( grid ) {
 	}
 
 
+
+
 // teleport am Rand
 
 field_array[0][0].neighbors[MOVE_NORTH] = field_array[field_array.length -1] [0];	//von oben links nach unten links
@@ -157,7 +161,7 @@ function getDirections ( grid, current_field, visited_fields ) {
 
 	let directions = [false,false,false,false];
 	let temp_field = 0;
-	let total_fields = grid.number_of_fields**2; // Grid ist quadratisch, daher können wir ^2 rechnen.
+	let total_fields = grid.number_of_fields**2;
 
 
 	//
@@ -220,5 +224,7 @@ function getRandomField( grid, field_array ) {
 	var field = maze[ coord.y ][ coord.x ];
 
 	return field;
+
+
 
 }
