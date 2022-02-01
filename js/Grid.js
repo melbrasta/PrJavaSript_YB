@@ -2,7 +2,7 @@ var Grid = function(cvs, number_of_fields )
 {
 this.cvs = cvs;
 this.ctx = this.cvs.getContext('2d');
-this.number_of_fields = number_of_fields;
+this.number_of_fields = Number (number_of_fields);
 
 
 this.field_width = this.cvs.width / number_of_fields;
