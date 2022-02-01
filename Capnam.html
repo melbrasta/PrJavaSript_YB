@@ -1,4 +1,4 @@
-<html>
+<html lang="de">
 <head>
 <title> Capnam </title>
 <meta charset='utf-8' />
@@ -24,11 +24,24 @@
 
 
 
-
+<script src='js/Grid.js'></script>
+<script src='js/fields.js'></script>
 
   <script>
-   alert ("Hier kurz die Regeln und Steuerung: \nBewegungen mit w,a,s,d auf der Tastatur\nZiel des Spiels: Überleben und viele Punkte machen")             //hier noch die Voraussetzungen einfügen
+   alert ("Hier kurz die Regeln und Steuerung: \nBewegungen mit w,a,s,d auf der Tastatur\nZiel des Spiels: Überleben und viele Punkte machen")             //hier noch die genaueren Voraussetzungen einfügen
+
+
     var cvs = document.getElementById('cvs');
+    var grid = new Grid( cvs, 10 );	// Anzahl an feldern
+
+//StartZeit und aktuelle Zeit als Variablen
+    var start_time = new Date().getTime();
+    var current_time = new Date().getTime();           //hier noch überlegen wo die Zeitanzeige am besten eingebaut werden soll
+
+
+
+
+
 
 
   </script>
