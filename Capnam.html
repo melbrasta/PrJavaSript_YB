@@ -15,23 +15,18 @@
   <br>
   <input type="text" value="" id="time" readonly >
   <br>
+  <input type="text" id="zuege" value= "0 Zuege gemacht" readonly>
+  <br>
   <canvas id='cvs' width='800px' height='800px' style="background-color:#0000ff ;border: 2px solid #000000;"></canvas>
   <br>
 
   <input type="number" id="dimensions" value="" placeholder="neue größe?(Anzahl Felder)">
   <button onclick="var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)'); neuesLevel()">Erstellen</button>
-  <input type="button" value="Test" onclick="neuesLevel(); clear()">
+  <input type="button" value="Test" onclick="neuesLevel()">
 
   <div id="footer">
-
        <p class="footer">- Created by Yannick Bauer</p>
-
   </div>
-
-
-
-
-
 
   <script>
 var cvs = document.getElementById('cvs');
@@ -42,13 +37,13 @@ let ctx = cvs.getContext("2d");
 
 function neuesLevel()
      {
+       clear(ctx);
        var dim = document.getElementById('dimensions').value;
-       console.log(dim);
        var grid = new Grid( cvs, dim );
        var maze = createMaze(grid);
-       var player1 = new Player ( "Capnam", start_field, "#ff0000");
-       player1.drawPlayerPosition( grid );
+       var player1 = new Player ( "player1", start_field, "#ff0000");
        grid.drawGrid(maze,player1);
+       player1.drawPlayerPosition( grid );
        grid.drawFieldNumbers();
 
      }
@@ -75,15 +70,46 @@ ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
     		delta_s = delta_s < 10 ? ("0"+delta_s) : delta_s;
 
     		let zeittext =`Zeit ${delta_m}:${delta_s}`;
-    		input_field.value = zeittext			//auf das input feld zugreifen
+    		input_field.value = zeittext
     	}
-
-
-
 setInterval (displayTime, 1000, document.getElementById('time'));
 
 
 
+
+
+
+
+cvs.onkeydown = keyDown;
+document.body.onkeydown = keyDown;
+
+
+
+
+//keybindings
+function keyDown( evt )
+{
+	let defined_keys = ["ArrowUp","ArrowRight", "ArrowDown" ,"ArrowLeft"]
+
+	console.log( evt.key );
+
+
+// hier habe ich einen bewegungs counter eingefügt (bewegung++) und der wird nur ausgeführt, wenn einer der definierten keys gedrückt wird.
+
+	if ( defined_keys.includes( evt.key ) )
+   {
+		let direction = defined_keys.indexOf( evt.key ) ;
+		player1.move( grid, direction );
+
+
+// das html input feld mit der id "zuege" soll den Wert von bewegungen bekommen!!  id ansprechen
+    document.getElementById('zuege').value = bewegungen + " Zuege gemacht";
+
+// ... und in der Konsole ausgegeben
+		console.log(bewegungen, " Zuege gemacht");
+		evt.preventDefault();
+	}
+}
 
 
   </script>
