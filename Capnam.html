@@ -38,14 +38,15 @@ let ctx = cvs.getContext("2d");
 
 function neuesLevel()
      {
+       start_time = new Date().getTime();
        clear(ctx);
        let dim = document.getElementById('dimensions').value;
+
        var grid = new Grid( cvs, dim );   // später noch eine Begrenzung einbauen
-       var maze = createMaze(grid);
-       var player1 = new Player ( "player1", start_field, "#ff0000");   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
+       const maze = createMaze(grid);     //verursachte einen Fehler. Deshalb was anderes Probiert
+       var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
        grid.drawGrid(maze,player1);
        player1.drawPlayerPosition( grid );
-       start_time = new Date().getTime();    // Startzeit hier hin, da es erst hier anfangen soll zu zählen
 //       grid.drawFieldNumbers();
       return { player: player1, grid: grid }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
 
