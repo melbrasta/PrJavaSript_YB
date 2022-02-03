@@ -58,7 +58,7 @@ function createMaze( grid ) {
 		field_array[target_coord.y][target_coord.x] = new Field( target_field, grid );
 
 
-/*		switch(direction) {
+		switch(direction) {
 				case MOVE_NORTH:
 				field_array[current_coord.y][current_coord.x].setNorth( field_array[target_coord.y][target_coord.x] );
 				field_array[target_coord.y][target_coord.x].setSouth( field_array[current_coord.y][current_coord.x] );
@@ -81,28 +81,6 @@ function createMaze( grid ) {
 				break;
 
 		}
-*/
-
-switch(direction)
-{
-		case MOVE_NORTH:
-		field_array[current_coord.y][current_coord.x].setNorth( field_array[target_coord.y][target_coord.x] );
-		break;
-
-		case MOVE_EAST:
-		field_array[current_coord.y][current_coord.x].setEast( field_array[target_coord.y][target_coord.x] );
-		break;
-
-		case MOVE_SOUTH:
-		field_array[current_coord.y][current_coord.x].setSouth( field_array[target_coord.y][target_coord.x] );
-		break;
-
-		case MOVE_WEST:
-		field_array[current_coord.y][current_coord.x].setWest( field_array[target_coord.y][target_coord.x] );
-		break;
-
-}
-
 
 
 		let start_x = Math.min( current_coord.x, target_coord.x ) ;
