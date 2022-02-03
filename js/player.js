@@ -1,8 +1,8 @@
 var bewegungen = 0 ;
-var Player = function( name, current_field, color ) {
+var Player = function( name, current_field, lives ) {						//changed color to Live attribute
 	this.name = name;
 	this.current_field = current_field;
-	this.color = color;
+	this.lives = lives;
 	this.playerImage = null;
 
 	this.item = null;
@@ -15,6 +15,7 @@ Player.prototype.init = function()
 {
 	this.playerImage = new Image();
 	this.playerImage.src = 'img/capnam.png';
+	bewegungen = 0; // Wert bei neuem Spiel zurücksetzen
 
 }
 
@@ -58,133 +59,63 @@ grid.ctx.drawImage(this.playerImage, target_x, target_y, target_width, target_he
 
 }
 
-Player.prototype.move = function( grid,  direction )
-{
-		let backgroundColor = "#000000";
-		switch( direction )
+Player.prototype.move = function( grid,  direction ) {
+	let backgroundColor = "#000000"
+
+//überschüssige Zeilen losgeworden
+	if( this.current_field.neighbors[ direction ] === null ) {
+		switch (direction)
 		{
-				case MOVE_NORTH:
-				if(this.current_field.neighbors[ direction ] === null)
-				{
+			case MOVE_NORTH:
 				console.log("Du kannst nicht nach Norden gehen!");
-
-				}
-				else
-				{
-					let old_position = getCoordinateFromId(grid, this.current_field.id);
-					grid.ctx.fillStyle=backgroundColor;
-					grid.ctx.fillRect( old_position.x * grid.field_width + 1
-					, old_position.y * grid.field_height + 1
-					, grid.field_width -2
-					, grid.field_height -2);
-
-					//
-					if( this.current_field.item )
-					{
-						this.item = this.current_field.item;
-						this.current_field.item = null;
-					}
-
-					this.current_field.drawField( grid );
-
-					//
-
-					this.current_field = this.current_field.neighbors[ direction ];
-					this.drawPlayerPosition(grid);
-					this.current_field.enter( this ) ;		// !!!
-					bewegungen++;
-				}
-
-			break;
-
+				break;
 			case MOVE_EAST:
-				if(this.current_field.neighbors[ direction ] === null) {
-					console.log("Du kannst nicht nach Osten gehen!");
-				}
-				else
-				{
-					let old_position = getCoordinateFromId(grid, this.current_field.id);
-					grid.ctx.fillStyle=backgroundColor;
-					grid.ctx.fillRect( old_position.x * grid.field_width + 1
-					, old_position.y * grid.field_height + 1
-					, grid.field_width -2
-					, grid.field_height -2);
-
-					if( this.current_field.item )
-					{
-						this.item = this.current_field.item;
-						this.current_field.item = null;
-					}
-
-					this.current_field.drawField( grid );
-
-					//
-
-					this.current_field = this.current_field.neighbors[ direction ];
-					this.drawPlayerPosition(grid);
-					this.current_field.enter( this ) ;		// !!!
-					bewegungen++;
-				}
-			break;
-
+				console.log("Du kannst nicht nach Osten gehen!");
+				break;
 			case MOVE_SOUTH:
-				if(this.current_field.neighbors[ direction ] === null) {
-					console.log("Du kannst nicht nach Süden gehen!");
-				}
-				else
-				{
-					let old_position = getCoordinateFromId(grid, this.current_field.id);
-					grid.ctx.fillStyle=backgroundColor;												//backgroundColor war noch nicht definiert
-					grid.ctx.fillRect( old_position.x * grid.field_width + 1
-					, old_position.y * grid.field_height + 1
-					, grid.field_width -2
-					, grid.field_height -2);
-					if( this.current_field.item )
-					{
-						this.item = this.current_field.item;
-						this.current_field.item = null;
-					}
-
-					this.current_field.drawField( grid );
-
-					//
-
-					this.current_field = this.current_field.neighbors[ direction ];
-					this.drawPlayerPosition(grid);
-					this.current_field.enter( this ) ;		// !!!
-					bewegungen++;
-				}
-			break;
-
+				console.log("Du kannst nicht nach Süden gehen!");
+				break;
 			case MOVE_WEST:
-				if(this.current_field.neighbors[ direction ] === null) {
-					console.log("Du kannst nicht nach Westen gehen!");
-				}
-				else
-				{
-					let old_position = getCoordinateFromId(grid, this.current_field.id);
-					grid.ctx.fillStyle=backgroundColor;
-					grid.ctx.fillRect( old_position.x * grid.field_width + 1
-					, old_position.y * grid.field_height + 1
-					, grid.field_width -2
-					, grid.field_height -2);
-
-					if( this.current_field.item )
-					{
-						this.item = this.current_field.item;
-						this.current_field.item = null;
-					}
-
-					this.current_field.drawField( grid );
-
-					//
-
-					this.current_field = this.current_field.neighbors[ direction ];
-					this.drawPlayerPosition(grid);
-					this.current_field.enter( this ) ;		// !!!
-					bewegungen++;
-				}
-			break;
-
+				console.log("Du kannst nicht nach Westen gehen!");
+				break;
 		}
+		this.live -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
+	} else
+	{
+		let old_position = getCoordinateFromId(grid, this.current_field.id);
+		grid.ctx.fillStyle=backgroundColor;
+		grid.ctx.fillRect(
+			old_position.x * grid.field_width + 1,
+			old_position.y * grid.field_height + 1,
+			grid.field_width -2,
+			grid.field_height -2,
+		);
+
+		//
+		if( this.current_field.item )
+		{
+			this.item = this.current_field.item;
+			this.current_field.item = null;
+		}
+
+		this.current_field.drawField( grid );
+
+		//
+
+		this.current_field = this.current_field.neighbors[ direction ];
+		this.drawPlayerPosition(grid);
+		try {
+			this.current_field.enter( this ) ; // Enter fehlt hier ja noch. Entweder einbauen oder es kann entfernt werden!
+		} catch (e) {
+			console.log(e)
+		}
+		bewegungen++;
+	}
+	if(this.live > 0) {								//Lebensattribut testen. bei Wandkollision leben-1
+		console.log("Du hast aktuell " + this.live + " Leben")
+	} else {
+		alert("Loooooooooooooooser")
+	}
+
+
 }
