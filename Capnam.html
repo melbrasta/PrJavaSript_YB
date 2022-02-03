@@ -2,7 +2,7 @@
 <head>
 <title> Capnam </title>
 <meta charset='utf-8' />
-<link rel="icon" type="image/x-icon" href="img/capnam.png">   <!--Preload player und gleichzeitig favicon -->
+<link rel="icon" type="image/x-icon" href="img/capnam.png">   <!-- favicon -->
 </head>
 
 <body onload="game = neuesLevel()">     <!-- Spielfeld erstellen ohne Knopfdruck und in der game Variable für später speichern-->
@@ -23,11 +23,12 @@
   <input type="number" id="dimensions" value="10" placeholder="neue größe?(Anzahl Felder)">   <!-- eine 10 für die automatische Levelgenerierung -->
   <button onclick="var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)'); game = neuesLevel()">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
   <input type="button" value="Test" onclick="game = neuesLevel()">  <!-- jetzt: game = neuesLevel-->
+  <img src="img/capnam.png" style="display: none">
 
   <div id="footer">
        <p class="footer">- Created by Yannick Bauer</p>
   </div>
-
+  
   <script>
 var cvs = document.getElementById('cvs');
 let ctx = cvs.getContext("2d");
