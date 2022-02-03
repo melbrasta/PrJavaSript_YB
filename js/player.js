@@ -1,10 +1,10 @@
-var Player = function( name, current_field, lives ) {						//changed color to Live attribute
+var Player = function( name, current_field, lives, rotate) {						//changed color to Live attribute
 	this.name = name;
 	this.current_field = current_field;
 	this.lives = lives;
 	this.playerImage = null;
-	this.steps_done = 0
-
+	this.steps_done = 0;
+	this.rotate = rotate;
 	this.item = null;
 	this.init();
 
@@ -52,10 +52,10 @@ Player.prototype.drawPlayerPosition = function (grid) {
 		target_x += (grid.field_width / 2) - (target_width / 2);
 		target_y += (grid.field_height/2) - (target_height/2);
 	}
-target_x+=10;										//hier stimmen die Werte noch nicht. Es wird noch zu viel überzeichnet		original:2,2,4,4
-target_y+=10;
-target_width-=20;
-target_height-=20;
+target_x+=2;										//hier stimmen die Werte noch nicht. Es wird noch zu viel überzeichnet		original:2,2,4,4
+target_y+=2;
+target_width-=4;
+target_height-=4;
 	this.playerImage.onload = () =>
 	{
 		grid.ctx.drawImage( this.playerImage, target_x, target_y, target_width, target_height);
@@ -71,7 +71,8 @@ Player.prototype.move = function( grid,  direction ) {
 	let backgroundColor = "#000000"
 
 //überschüssige Zeilen losgeworden
-	if( this.current_field.neighbors[ direction ] === null ) {
+	if( this.current_field.neighbors[ direction ] === null )
+	{
 		switch (direction)
 		{
 			case MOVE_NORTH:
@@ -87,7 +88,6 @@ Player.prototype.move = function( grid,  direction ) {
 				console.log("Du kannst nicht nach Westen gehen!");
 				break;
 		}
-
 		this.lives -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
 		switch(this.lives)
 		{
@@ -100,13 +100,13 @@ Player.prototype.move = function( grid,  direction ) {
 				case 1:
 						document.getElementById('leben').value = "♥";
 						break;
-
 		}
 
 
 		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");
 	} else
 	{
+
 		let old_position = getCoordinateFromId(grid, this.current_field.id);
 		grid.ctx.fillStyle=backgroundColor;
 		grid.ctx.fillRect(
