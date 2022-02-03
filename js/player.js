@@ -6,12 +6,21 @@ var Player = function( name, current_field, lives, rotate) {						//changed colo
 	this.steps_done = 0;
 	this.rotate = rotate;
 	this.item = null;
+	this.punkte = 0;
 	this.init();
 
 }
 
 
+/*
+score = 0;
 
+function score()
+{
+	score =+10;
+	document.getElementById('punkte').value = score;
+}
+*/
 
 
 
@@ -102,6 +111,7 @@ Player.prototype.move = function( grid,  direction ) {
 						break;
 				case 0:
 						document.getElementById('leben').value = "Tot	†";
+						neuesLevel();
 						break;
 		}
 
@@ -109,7 +119,6 @@ Player.prototype.move = function( grid,  direction ) {
 		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");
 	} else
 	{
-
 		let old_position = getCoordinateFromId(grid, this.current_field.id);
 		grid.ctx.fillStyle=backgroundColor;
 		grid.ctx.fillRect(
