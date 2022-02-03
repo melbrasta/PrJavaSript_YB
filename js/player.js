@@ -58,11 +58,15 @@ grid.ctx.drawImage(this.playerImage, target_x, target_y, target_width, target_he
 
 }
 
-Player.prototype.move = function( grid,  direction ) {
-		switch( direction ) {
-			case MOVE_NORTH:
-				if(this.current_field.neighbors[ direction ] === null) {
-					console.log("Du kannst nicht nach Norden gehen!");
+Player.prototype.move = function( grid,  direction )
+{
+		let backgroundColor = "#000000";
+		switch( direction )
+		{
+				case MOVE_NORTH:
+				if(this.current_field.neighbors[ direction ] === null)
+				{
+				console.log("Du kannst nicht nach Norden gehen!");
 
 				}
 				else
@@ -130,7 +134,7 @@ Player.prototype.move = function( grid,  direction ) {
 				else
 				{
 					let old_position = getCoordinateFromId(grid, this.current_field.id);
-					grid.ctx.fillStyle=backgroundColor;
+					grid.ctx.fillStyle=backgroundColor;												//backgroundColor war noch nicht definiert
 					grid.ctx.fillRect( old_position.x * grid.field_width + 1
 					, old_position.y * grid.field_height + 1
 					, grid.field_width -2
