@@ -2,9 +2,10 @@
 <head>
 <title> Capnam </title>
 <meta charset='utf-8' />
+<link rel="icon" type="image/x-icon" href="img/capnam.png">   <!--Preload player und gleichzeitig favicon -->
 </head>
 
-<body>
+<body onload="game = neuesLevel()">     <!-- Spielfeld erstellen ohne Knopfdruck und in der game Variable für später speichern-->
   <script src='js/Grid.js'></script>
   <script src='js/fields.js'></script>
   <script src='js/maze.js'></script>
@@ -19,10 +20,9 @@
   <br>
   <canvas id='cvs' width='800px' height='800px' style="background-color:#0000ff ;border: 2px solid #000000;"></canvas>
   <br>
-
-  <input type="number" id="dimensions" value="" placeholder="neue größe?(Anzahl Felder)">
-  <button onclick="var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)'); neuesLevel()">Erstellen</button>
-  <input type="button" value="Test" onclick="neuesLevel()">
+  <input type="number" id="dimensions" value="10" placeholder="neue größe?(Anzahl Felder)">   <!-- eine 10 für die automatische Levelgenerierung -->
+  <button onclick="var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)'); game = neuesLevel()">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
+  <input type="button" value="Test" onclick="game = neuesLevel()">  <!-- jetzt: game = neuesLevel-->
 
   <div id="footer">
        <p class="footer">- Created by Yannick Bauer</p>
