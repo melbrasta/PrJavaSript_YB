@@ -17,6 +17,7 @@
   <input type="text" value="" id="time" readonly >
   <br>
   <input type="text" id="zuege" value= "0 Zuege gemacht" readonly>
+    <input type="text" id="leben" value= "" readonly>      <!--lebensanzeiger: Value wird bei player.prototype.init gesetzt -->
   <br>
   <canvas id='cvs' width='800px' height='800px' style="background-color:#0000ff ;border: 2px solid #000000;"></canvas>
   <br>
@@ -108,10 +109,10 @@ function keyDown( evt )
 
 
 // das html input feld mit der id "zuege" soll den Wert von bewegungen bekommen!!  id ansprechen
-    document.getElementById('zuege').value = bewegungen + " Zuege gemacht";
+    document.getElementById('zuege').value = game.player.steps_done + " Zuege gemacht";
 
 // ... und in der Konsole ausgegeben
-		console.log(bewegungen, " Zuege gemacht");
+		console.log(game.player.steps_done, " Zuege gemacht");
 		evt.preventDefault();
 	}
 }

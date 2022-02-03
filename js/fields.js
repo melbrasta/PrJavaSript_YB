@@ -52,6 +52,12 @@ Field.prototype.move = function( direction ) {
 }
 
 
+// Hier könnte etwas passieren...
+Field.prototype.enter = function ( etwas ) {
+	console.log("Die Funktion enter ist noch nicht definiert")
+	return
+}
+
 
 
 

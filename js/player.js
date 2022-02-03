@@ -1,13 +1,18 @@
-var bewegungen = 0 ;
 var Player = function( name, current_field, lives ) {						//changed color to Live attribute
 	this.name = name;
 	this.current_field = current_field;
 	this.lives = lives;
 	this.playerImage = null;
+	this.steps_done = 0
 
 	this.item = null;
 	this.init();
+
 }
+
+
+
+
 
 
 
@@ -15,8 +20,8 @@ Player.prototype.init = function()
 {
 	this.playerImage = new Image();
 	this.playerImage.src = 'img/capnam.png';
-	bewegungen = 0; // Wert bei neuem Spiel zurücksetzen
-
+	this.steps_done = 0; // Wert bei neuem Spiel zurücksetzen
+	document.getElementById('leben').value = "♥ ♥ ♥";
 }
 
 
@@ -47,7 +52,10 @@ Player.prototype.drawPlayerPosition = function (grid) {
 		target_x += (grid.field_width / 2) - (target_width / 2);
 		target_y += (grid.field_height/2) - (target_height/2);
 	}
-
+target_x+=10;										//hier stimmen die Werte noch nicht. Es wird noch zu viel überzeichnet		original:2,2,4,4
+target_y+=10;
+target_width-=20;
+target_height-=20;
 	this.playerImage.onload = () =>
 	{
 		grid.ctx.drawImage( this.playerImage, target_x, target_y, target_width, target_height);
@@ -79,7 +87,24 @@ Player.prototype.move = function( grid,  direction ) {
 				console.log("Du kannst nicht nach Westen gehen!");
 				break;
 		}
+
 		this.lives -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
+		switch(this.lives)
+		{
+				case 3:
+						document.getElementById('leben').value = "♥ ♥ ♥";
+						break;
+				case 2:
+						document.getElementById('leben').value = "♥ ♥";
+						break;
+				case 1:
+						document.getElementById('leben').value = "♥";
+						break;
+
+		}
+
+
+		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");
 	} else
 	{
 		let old_position = getCoordinateFromId(grid, this.current_field.id);
@@ -104,18 +129,22 @@ Player.prototype.move = function( grid,  direction ) {
 
 		this.current_field = this.current_field.neighbors[ direction ];
 		this.drawPlayerPosition(grid);
-		try {
+		try
+		{
 			this.current_field.enter( this ) ; // Enter fehlt hier ja noch. Entweder einbauen oder es kann entfernt werden!
-		} catch (e) {
+		} catch (e)
+		{
 			console.log(e)
 		}
-		bewegungen++;
+		this.steps_done ++;
 	}
-	if(this.lives > 0) {								//Lebensattribut testen. bei Wandkollision leben-1
+	if(this.lives > 0)
+	{								//Lebensattribut testen. bei Wandkollision leben-1
 		console.log("Du hast aktuell " + this.lives + " Leben")
-	} else {
-		alert("Loooooooooooooooser")
-	}
+	} else
+		{
+			alert("Loooooooooooooooser")
+		}
 
 
 }
