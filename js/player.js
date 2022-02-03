@@ -21,7 +21,7 @@ Player.prototype.init = function()
 	this.playerImage = new Image();
 	this.playerImage.src = 'img/capnam.png';
 	this.steps_done = 0; // Wert bei neuem Spiel zurücksetzen
-	document.getElementById('leben').value = "♥ ♥ ♥";
+	document.getElementById('leben').value = "Leben:	♥ ♥ ♥";
 }
 
 
@@ -92,13 +92,16 @@ Player.prototype.move = function( grid,  direction ) {
 		switch(this.lives)
 		{
 				case 3:
-						document.getElementById('leben').value = "♥ ♥ ♥";
+						document.getElementById('leben').value = "Leben:	♥ ♥ ♥";
 						break;
 				case 2:
-						document.getElementById('leben').value = "♥ ♥";
+						document.getElementById('leben').value = "Leben:	♥ ♥";
 						break;
 				case 1:
-						document.getElementById('leben').value = "♥";
+						document.getElementById('leben').value = "Leben:	♥";
+						break;
+				case 0:
+						document.getElementById('leben').value = "Tot	†";
 						break;
 		}
 
@@ -138,7 +141,7 @@ Player.prototype.move = function( grid,  direction ) {
 		}
 		this.steps_done ++;
 	}
-	if(this.lives > 0)
+	if(this.lives >= 0)
 	{								//Lebensattribut testen. bei Wandkollision leben-1
 		console.log("Du hast aktuell " + this.lives + " Leben")
 	} else

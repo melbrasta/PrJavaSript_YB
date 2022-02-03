@@ -26,7 +26,7 @@ function createMaze( grid ) {
 
 	let start_field = field_array[current_coord.y][current_coord.x];		//vllt als var speichern??
 
-	field_array[current_coord.y][current_coord.x].setStart();
+//	field_array[current_coord.y][current_coord.x].setStart();
 	visited_fields.push( current_field );
 	stack.push( current_field );
 
@@ -52,13 +52,13 @@ function createMaze( grid ) {
 			target_field = possible_direction[ direction ];
 		}
 
-		current_coord = getCoordinateFromId(grid, current_field);
-		target_coord  = getCoordinateFromId(grid, target_field);
+		current_coord = grid.getCoordinateFromId( current_field);
+		target_coord  = grid.getCoordinateFromId( target_field);
 
-		field_array[target_coord.y][target_coord.x] = new Field( target_field );
+		field_array[target_coord.y][target_coord.x] = new Field( target_field, grid );
 
 
-		switch(direction) {
+/*		switch(direction) {
 				case MOVE_NORTH:
 				field_array[current_coord.y][current_coord.x].setNorth( field_array[target_coord.y][target_coord.x] );
 				field_array[target_coord.y][target_coord.x].setSouth( field_array[current_coord.y][current_coord.x] );
@@ -81,6 +81,29 @@ function createMaze( grid ) {
 				break;
 
 		}
+*/
+
+switch(direction)
+{
+		case MOVE_NORTH:
+		field_array[current_coord.y][current_coord.x].setNorth( field_array[target_coord.y][target_coord.x] );
+		break;
+
+		case MOVE_EAST:
+		field_array[current_coord.y][current_coord.x].setEast( field_array[target_coord.y][target_coord.x] );
+		break;
+
+		case MOVE_SOUTH:
+		field_array[current_coord.y][current_coord.x].setSouth( field_array[target_coord.y][target_coord.x] );
+		break;
+
+		case MOVE_WEST:
+		field_array[current_coord.y][current_coord.x].setWest( field_array[target_coord.y][target_coord.x] );
+		break;
+
+}
+
+
 
 		let start_x = Math.min( current_coord.x, target_coord.x ) ;
 		let start_y = Math.min( current_coord.y, target_coord.y ) ;
@@ -123,8 +146,8 @@ function createMaze( grid ) {
 		console.log( `gehe zu Feld: ${target_field}` );
 		current_field = target_field;
 
-	goal = getCoordinateFromId(grid, target_field);
-	field_array[goal.y][goal.x].setGoal();
+//	goal = getCoordinateFromId(grid, target_field);
+//	field_array[goal.y][goal.x].setGoal();								//Das Ziel muss noch eingeblendet werden
 
 	}
 
@@ -144,6 +167,43 @@ field_array[field_array.length -1][field_array.length -1].neighbors[MOVE_SOUTH] 
 
 field_array[0] [field_array.length -1].neighbors[MOVE_NORTH] = field_array[field_array.length -1] [field_array.length -1];	//von oben rechts nach unten rechts
 field_array[0] [field_array.length -1].neighbors[MOVE_EAST] = field_array[0] [0];											//von oben rechts nach oben links
+
+/*
+function durchgang()
+{
+	let d1 = getRandomField(grid,field_array)
+	console.log(d1);
+}
+*/
+
+//
+//keine funktion???
+/*
+for( let y  = 1; y < field_array.length - 1; y++ ) {
+	for( let x = 1; x < field_array[y].length -1; x++) {
+		if( Math.random() < 0.75 ) {
+			let rnd = parseInt( Math.random() * 4 );
+			switch( rnd ) {
+				case MOVE_NORTH:
+					field_array[y][x].setNorth( field_array[y-1][x] ) ;
+				break;
+				case MOVE_EAST:
+					field_array[y][x].setEast( field_array[y][x+1] ) ;
+				break;
+				case MOVE_SOUTH:
+					field_array[y][x].setSouth( field_array[y+1][x] ) ;
+				break;
+				case MOVE_WEST:
+					field_array[y][x].setWest( field_array[y][x-1] ) ;
+				break;
+
+			}
+		}
+	}
+}
+*/
+
+
 
 
 
@@ -207,7 +267,6 @@ function getDirections ( grid, current_field, visited_fields ) {
 	return directions;
 
 }
-
 
 
 //

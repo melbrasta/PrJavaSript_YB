@@ -9,12 +9,13 @@ var Field = function(id) {
 }
 
 
-// start und ziel setzen
+ start und ziel setzen
 Field.prototype.setStart = function()
 {
 	this.start = true;
 
 }
+
 Field.prototype.setGoal = function()
 {
 	this.goal = true;
