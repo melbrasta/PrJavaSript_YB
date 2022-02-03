@@ -98,12 +98,12 @@ function keyDown( evt )
 	console.log( evt.key );
 
 
-// hier habe ich einen bewegungs counter eingefügt (bewegung++) und der wird nur ausgeführt, wenn einer der definierten keys gedrückt wird.
+// hier habe ich einen bewegungs counter eingefügt (bewegung++) und der wird nur ausgeführt, wenn "move" ausgeführt wird.
 
 	if ( defined_keys.includes( evt.key ) )
    {
 		let direction = defined_keys.indexOf( evt.key ) ;
-		player1.move( grid, direction );
+		game.player.move( game.grid, direction );   //konnte bisher nicht auf den player1 zugreifen. daher jetzt game.player1. Danach grid aus der Variable game genommen (game.grid)
 
 
 // das html input feld mit der id "zuege" soll den Wert von bewegungen bekommen!!  id ansprechen
