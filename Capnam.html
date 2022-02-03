@@ -89,13 +89,8 @@ setInterval (displayTime, 1000, document.getElementById('time'));
 
 
 
-
-
-
-
 cvs.onkeydown = keyDown;
 document.body.onkeydown = keyDown;
-
 
 
 
@@ -121,6 +116,15 @@ function keyDown( evt )
 // ... und in der Konsole ausgegeben
 		console.log(game.player.steps_done, " Zuege gemacht");
 		evt.preventDefault();
+	}
+}
+
+
+function redrawMaze( maze, grid ) {
+	for( let y = 0; y < this.maze.length; y++){
+		for( let x = 0; x < this.maze[0].length; x++ ) {
+			maze[y][x].drawField( grid );
+		}
 	}
 }
 

@@ -156,7 +156,8 @@ function durchgang()
 
 //
 //keine funktion???
-/*
+
+
 for( let y  = 1; y < field_array.length - 1; y++ ) {
 	for( let x = 1; x < field_array[y].length -1; x++) {
 		if( Math.random() < 0.75 ) {
@@ -174,12 +175,11 @@ for( let y  = 1; y < field_array.length - 1; y++ ) {
 				case MOVE_WEST:
 					field_array[y][x].setWest( field_array[y][x-1] ) ;
 				break;
-
+redrawMaze();
 			}
 		}
 	}
 }
-*/
 
 
 
