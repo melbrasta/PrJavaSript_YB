@@ -24,7 +24,7 @@ function createMaze( grid ) {
 
 	field_array[current_coord.y][current_coord.x] = new Field( current_field );
 
-	start_field = field_array[current_coord.y][current_coord.x];		//vllt als var speichern??
+	let start_field = field_array[current_coord.y][current_coord.x];		//vllt als var speichern??
 
 	field_array[current_coord.y][current_coord.x].setStart();
 	visited_fields.push( current_field );
@@ -147,8 +147,7 @@ field_array[0] [field_array.length -1].neighbors[MOVE_EAST] = field_array[0] [0]
 
 
 
-
-//	return start_field; // Gibt das Feld zurück, welches zuerst erstellt wurde
+field_array.start_field = start_field;			//packt das start_field in das array welches später zugänglich ist
 	return field_array; // Gibt alle Felder zurück
 }
 
