@@ -28,7 +28,7 @@
   <div id="footer">
        <p class="footer">- Created by Yannick Bauer</p>
   </div>
-  
+
   <script>
 var cvs = document.getElementById('cvs');
 let ctx = cvs.getContext("2d");
@@ -39,13 +39,16 @@ let ctx = cvs.getContext("2d");
 function neuesLevel()
      {
        clear(ctx);
-       var dim = document.getElementById('dimensions').value;
-       var grid = new Grid( cvs, dim );
+       let dim = document.getElementById('dimensions').value;
+       var grid = new Grid( cvs, dim );   // später noch eine Begrenzung einbauen
        var maze = createMaze(grid);
-       var player1 = new Player ( "player1", start_field, "#ff0000");
+       var player1 = new Player ( "player1", start_field, "#ff0000");   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
        grid.drawGrid(maze,player1);
        player1.drawPlayerPosition( grid );
-       grid.drawFieldNumbers();
+       start_time = new Date().getTime();    // Startzeit hier hin, da es erst hier anfangen soll zu zählen
+//       grid.drawFieldNumbers();
+      return { player: player1, grid: grid }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
+
 
      }
 function clear (ctx)
