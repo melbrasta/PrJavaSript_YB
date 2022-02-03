@@ -79,7 +79,7 @@ Player.prototype.move = function( grid,  direction ) {
 				console.log("Du kannst nicht nach Westen gehen!");
 				break;
 		}
-		this.live -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
+		this.lives -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
 	} else
 	{
 		let old_position = getCoordinateFromId(grid, this.current_field.id);
@@ -111,8 +111,8 @@ Player.prototype.move = function( grid,  direction ) {
 		}
 		bewegungen++;
 	}
-	if(this.live > 0) {								//Lebensattribut testen. bei Wandkollision leben-1
-		console.log("Du hast aktuell " + this.live + " Leben")
+	if(this.lives > 0) {								//Lebensattribut testen. bei Wandkollision leben-1
+		console.log("Du hast aktuell " + this.lives + " Leben")
 	} else {
 		alert("Loooooooooooooooser")
 	}
