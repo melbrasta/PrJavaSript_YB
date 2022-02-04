@@ -98,6 +98,7 @@ Player.prototype.move = function( grid,  direction ) {
 				break;
 		}
 		this.lives -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
+		score_less();										//Punkte weniger bei Lebensverlust
 		switch(this.lives)
 		{
 				case 3:
@@ -133,7 +134,7 @@ Player.prototype.move = function( grid,  direction ) {
 			this.item = this.current_field.item;
 			this.current_field.item = null;
 		}
-
+		score_move();
 		this.current_field.drawField( grid );
 
 		//

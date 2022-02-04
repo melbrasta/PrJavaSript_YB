@@ -90,7 +90,20 @@ ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
     	}
 
 Punkte = 0;
-function score ()
+function score_move ()
+{
+  Punkte +=5;
+  document.getElementById('punkte').value ="Punkte: " + Punkte;
+}
+
+function score_less ()
+{
+  Punkte -=50;
+  document.getElementById('punkte').value ="Punkte: " + Punkte;
+}
+
+
+function score_time ()
 {
   Punkte +=10;
   document.getElementById('punkte').value ="Punkte: " + Punkte;
@@ -98,7 +111,7 @@ function score ()
 
 
 setInterval (displayTime, 1000, document.getElementById('time'));
-setInterval (score, 3500, document.getElementById('punkte'));   //Punkte pro Zeit
+setInterval (score_time, 3500);   //Punkte auf Zeit
 
 
 cvs.onkeydown = keyDown;
