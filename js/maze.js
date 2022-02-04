@@ -1,11 +1,3 @@
-function getCoordinateFromId( grid, field_id ){
-return {
-	x: field_id % grid.number_of_fields,
-	y: parseInt( field_id / grid.number_of_fields ),
-};
-}
-
-
 function createMaze( grid ) {
 
 	let visited_fields = [];
@@ -20,7 +12,7 @@ function createMaze( grid ) {
 	let field_array = new Array( grid.number_of_fields ).fill(0).map( a => new Array( grid.number_of_fields ).fill(0) );
 
 
-	let current_coord = getCoordinateFromId(grid, current_field);
+	let current_coord = grid.getCoordinateFromId(current_field);
 
 	field_array[current_coord.y][current_coord.x] = new Field( current_field );
 
@@ -112,7 +104,7 @@ field_array[field_array.length -1][field_array.length -1].neighbors[MOVE_SOUTH] 
 field_array[0] [field_array.length -1].neighbors[MOVE_NORTH] = field_array[field_array.length -1] [field_array.length -1];	//von oben rechts nach unten rechts
 field_array[0] [field_array.length -1].neighbors[MOVE_EAST] = field_array[0] [0];											//von oben rechts nach oben links
 
-		grid.ctx.fillStyle="#000000";					//Farbe vom Spielfeld vllt Schwarz besser?
+//		grid.ctx.fillStyle="#000000";					//Farbe vom Spielfeld vllt Schwarz besser?
 
 
 

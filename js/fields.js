@@ -98,8 +98,9 @@ Field.prototype.enter = function ( etwas ) {
 
 Field.prototype.drawField = function (grid)
 {
-	grid.ctx.strokeStyle='#000000';
-	let border = getCoordinateFromId (this.id);
+	grid.ctx.strokeStyle='#0000ff';
+	grid.ctx.fillStyle ='#000000';
+	let border = grid.getCoordinateFromId (this.id);
 	if (!this.neighbors[0])
 	{
 
@@ -113,7 +114,6 @@ Field.prototype.drawField = function (grid)
 	}
 	if (!this.neighbors[1])
 	{
-		let border = getCoordinateFromId (this.id);
 		grid.ctx.beginPath();
 		grid.ctx.moveTo((1 + border.x )* grid.field_width, border.y * grid.field_height);
 		grid.ctx.lineTo(( 1 + border.x) * grid.field_width,(1 + border.y )* grid.field_height);
@@ -123,7 +123,6 @@ Field.prototype.drawField = function (grid)
 	}
 	if (!this.neighbors[2])
 	{
-		let border = getCoordinateFromId (this.id);
 		grid.ctx.beginPath();
 		grid.ctx.moveTo(border.x * grid.field_width,( 1 + border.y )* grid.field_height);
 		grid.ctx.lineTo(( 1 + border.x) * grid.field_width,(1 + border.y) * grid.field_height);
@@ -133,7 +132,6 @@ Field.prototype.drawField = function (grid)
 	}
 	if (!this.neighbors[3])
 	{
-		let border = getCoordinateFromId (this.id);
 		grid.ctx.beginPath();
 		grid.ctx.moveTo ( border.x* grid.field_width, border.y * grid.field_height);
 		grid.ctx.lineTo( border.x * grid.field_width,(1 + border.y )* grid.field_height);

@@ -95,9 +95,10 @@ Grid.prototype.getStart = function(maze)
 	}
 }
 
+/*
 Grid.prototype.drawStart = function (maze)
 {
-	var start_coord = getCoordinateFromId(this,this.getStart(maze).id);
+	var start_coord = getCoordinateFromId(this.getStart(maze).id);
 	this.ctx.beginPath();
 	this.ctx.fillStyle = "#0000ff";
 	this.ctx.arc( (start_coord.x * this.field_width)  + (this.field_width / 2)
@@ -105,3 +106,4 @@ Grid.prototype.drawStart = function (maze)
 				, 	15, 0 , 2*Math.PI);
 	this.ctx.fill();
 }
+*/

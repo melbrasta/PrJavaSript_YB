@@ -24,7 +24,7 @@
 
 
   <br>
-  <canvas id='cvs' width='800px' height='800px' style="background-color:#0000ff ;border: 2px solid #000000;"></canvas>
+  <canvas id='cvs' width='800px' height='800px' style="background-color:#000000 ;border: 2px solid #000000;"></canvas>
   <br>
   <input type="number" id="dimensions" value="10" placeholder="neue größe?(Anzahl Felder)">   <!-- eine 10 für die automatische Levelgenerierung -->
   <button onclick="var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)'); game = neuesLevel()">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
@@ -54,7 +54,8 @@ function neuesLevel()
        var grid = new Grid( cvs, dim );   // später noch eine Begrenzung einbauen
        const maze = createMaze(grid);     //verursachte einen Fehler. Deshalb was anderes Probiert
        var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
-       grid.drawGrid(maze,player1);
+//       grid.drawGrid(maze,player1);
+maze.flat().forEach(field => field.drawField(grid) )
        player1.drawPlayerPosition( grid );
 //       grid.drawFieldNumbers();
       return { player: player1, grid: grid }    // player und grid zurück geben, sodass man es überall hat (in der variable game)

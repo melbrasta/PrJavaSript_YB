@@ -35,7 +35,7 @@ Player.prototype.init = function()
 
 
 Player.prototype.drawPlayerPosition = function (grid) {
-	var start_coord = getCoordinateFromId( grid, this.current_field.id );
+	var start_coord = grid.getCoordinateFromId(this.current_field.id );
 
 	let target_width = 0;
 	let target_height = 0;
@@ -115,11 +115,10 @@ Player.prototype.move = function( grid,  direction ) {
 						break;
 		}
 
-
 		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");
 	} else
 	{
-		let old_position = getCoordinateFromId(grid, this.current_field.id);
+		let old_position = grid.getCoordinateFromId( this.current_field.id);
 		grid.ctx.fillStyle=backgroundColor;
 		grid.ctx.fillRect(
 			old_position.x * grid.field_width + 1,
