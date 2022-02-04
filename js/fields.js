@@ -29,18 +29,24 @@ Field.prototype.setGoal = function()
 
 Field.prototype.setNorth = function( north ) {
 	this.neighbors[0] = north;
+	north.neighbors[ MOVE_SOUTH ] = this;
 }
 
 Field.prototype.setEast = function( east ) {
 	this.neighbors[1] = east;
+	east.neighbors[ MOVE_WEST] = this;
+
 }
 
 Field.prototype.setSouth = function( south ) {
 	this.neighbors[2] = south;
+	south.neighbors[MOVE_NORTH] = this;
+
 }
 
 Field.prototype.setWest = function( west ) {
 	this.neighbors[3] = west;
+	west.neighbors[MOVE_EAST] = this;
 }
 //
 // [directions] bestimmt die gewünschte Richtung:

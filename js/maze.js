@@ -83,40 +83,6 @@ function createMaze( grid ) {
 		}
 
 
-		let start_x = Math.min( current_coord.x, target_coord.x ) ;
-		let start_y = Math.min( current_coord.y, target_coord.y ) ;
-
-		let target_x = Math.max( current_coord.x, target_coord.x );
-		let target_y = Math.max( current_coord.y, target_coord.y );
-
-		grid.ctx.fillStyle="#000000";					//Farbe vom Spielfeld vllt Schwarz besser?
-
-		//
-		// Überzeichnet die Rechtecke und stellt grafisch die Verbindungen der einzelnen Felder dar
-		//
-
-		if( start_x != target_x ) {
-			grid.ctx.fillRect( 	start_x * grid.field_width + 1
-							,  	start_y * grid.field_height + 1
-							,   grid.field_width * 2 - 2
-							,   grid.field_height - 2);
-		}
-		if( start_y != target_y ) {
-			grid.ctx.fillRect( 	start_x * grid.field_width + 1
-							,  	start_y * grid.field_height + 1
-							,   grid.field_width - 2
-							,   grid.field_height * 2 -2 );
-		}
-
-
-		grid.ctx.fillRect( 	start_x * grid.field_width + 1
-						,  	start_y * grid.field_height + 1
-						,   grid.field_width  * (start_x != target_x ? 2 : 1) - 2
-						,   grid.field_height * (start_y != target_y ? 2 : 1) - 2);
-
-
-
-
 
 
 		visited_fields.push( target_field);
@@ -146,19 +112,14 @@ field_array[field_array.length -1][field_array.length -1].neighbors[MOVE_SOUTH] 
 field_array[0] [field_array.length -1].neighbors[MOVE_NORTH] = field_array[field_array.length -1] [field_array.length -1];	//von oben rechts nach unten rechts
 field_array[0] [field_array.length -1].neighbors[MOVE_EAST] = field_array[0] [0];											//von oben rechts nach oben links
 
+		grid.ctx.fillStyle="#000000";					//Farbe vom Spielfeld vllt Schwarz besser?
+
+
+
+//sollte eigentlich zufällige zusatzwege erschaffen...
 /*
-function durchgang()
+for( let y  = 1; y < field_array.length - 1; y++ )
 {
-	let d1 = getRandomField(grid,field_array)
-	console.log(d1);
-}
-*/
-
-//
-//keine funktion???
-
-
-for( let y  = 1; y < field_array.length - 1; y++ ) {
 	for( let x = 1; x < field_array[y].length -1; x++) {
 		if( Math.random() < 0.75 ) {
 			let rnd = parseInt( Math.random() * 4 );
@@ -175,23 +136,65 @@ for( let y  = 1; y < field_array.length - 1; y++ ) {
 				case MOVE_WEST:
 					field_array[y][x].setWest( field_array[y][x-1] ) ;
 				break;
-redrawMaze();
+
 			}
 		}
 	}
 }
+*/
+
+		let start_x = Math.min( current_coord.x, target_coord.x ) ;
+		let start_y = Math.min( current_coord.y, target_coord.y ) ;
+
+		let target_x = Math.max( current_coord.x, target_coord.x );
+		let target_y = Math.max( current_coord.y, target_coord.y );
+
+
+
+		//
+		// Überzeichnet die Rechtecke und stellt grafisch die Verbindungen der einzelnen Felder dar
+		//
+
+		if( start_x != target_x ) {
+			grid.ctx.fillRect( 	start_x * grid.field_width + 1
+							,  	start_y * grid.field_height + 1
+							,   grid.field_width * 2 - 2
+							,   grid.field_height - 2);
+		}
+		if( start_y != target_y ) {
+			grid.ctx.fillRect( 	start_x * grid.field_width + 1
+							,  	start_y * grid.field_height + 1
+							,   grid.field_width - 2
+							,   grid.field_height * 2 -2 );
+		}
+
+
+		grid.ctx.fillRect( 	start_x * grid.field_width + 1
+						,  	start_y * grid.field_height + 1
+						,   grid.field_width  * (start_x != target_x ? 2 : 1) - 2
+						,   grid.field_height * (start_y != target_y ? 2 : 1) - 2);
 
 
 
 
 
+//redrawMaze(this.maze, grid);		//function redrawMaze gibt einen Fehler
 field_array.start_field = start_field;			//packt das start_field in das array welches später zugänglich ist
 	return field_array; // Gibt alle Felder zurück
 }
 
 
-
-
+/*
+function redrawMaze( maze, grid ) {									//function redrawMaze gibt einen Fehler
+	for( let y = 0; y < maze.length; y++){
+		for( let x = 0; x < maze[0].length; x++ ) {
+			maze[y][x].drawField( grid );
+			grid.drawGrid(maze,player1);
+			player1.drawPlayerPosition( grid );
+		}
+	}
+}
+*/
 
 
 function getDirections ( grid, current_field, visited_fields ) {
