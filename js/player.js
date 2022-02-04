@@ -1,16 +1,3 @@
-var Player = function( name, current_field, lives, rotate) {						//changed color to Live attribute
-	this.name = name;
-	this.current_field = current_field;
-	this.lives = lives;
-	this.playerImage = null;
-	this.steps_done = 0;
-	this.rotate = rotate;
-	this.item = null;
-	this.punkte = 0;
-	this.init();
-
-}
-
 function sound(src)
 {
   this.sound = document.createElement("audio");
@@ -30,6 +17,20 @@ function sound(src)
 
 var tok;
 tok = new sound("tok.mp3");
+
+
+
+var Player = function( name, current_field, lives, rotate) {						//changed color to Live attribute
+	this.name = name;
+	this.current_field = current_field;
+	this.lives = lives;
+	this.playerImage = null;
+	this.steps_done = 0;
+	this.rotate = rotate;
+	this.item = null;
+	this.punkte = 0;
+	this.init();
+}
 
 Player.prototype.init = function()
 {
@@ -67,6 +68,7 @@ Player.prototype.drawPlayerPosition = function (grid) {
 		target_x += (grid.field_width / 2) - (target_width / 2);
 		target_y += (grid.field_height/2) - (target_height/2);
 	}
+
 target_x+=2;										//hier stimmen die Werte noch nicht. Es wird noch zu viel überzeichnet		original:2,2,4,4
 target_y+=2;
 target_width-=4;
@@ -107,7 +109,7 @@ Player.prototype.move = function( grid,  direction ) {
 		}
 		tok.play();
 		this.lives -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
-		score_less();										//Punkte weniger bei Lebensverlust
+		score_less();																					//Punkte weniger bei Lebensverlust
 		switch(this.lives)
 		{
 				case 3:
@@ -121,11 +123,12 @@ Player.prototype.move = function( grid,  direction ) {
 						break;
 				case 0:
 						document.getElementById('leben').value = "Tot	†";
+						clear(ctx);
 						game = neuesLevel();
 						break;
 		}
 
-		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");
+		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");					//vllt klappt es mit der wand einreißen
 	} else
 	{
 		let old_position = grid.getCoordinateFromId( this.current_field.id);
@@ -168,4 +171,112 @@ Player.prototype.move = function( grid,  direction ) {
 		}
 
 
+}
+// Gegner
+
+var Enemy = function(name, current_field)
+{
+	this.name = name;
+	this.current_field = current_field;
+	this.init();
+}
+
+
+Enemy.prototype.init = function()
+{
+	this.enemyImage = new Image();
+	this.enemyImage.src = 'img/badnam.png';
+}
+
+
+Enemy.prototype.drawEnemyPosition = function (grid) {					//brauche neue zufällige Position
+	var start_coord = grid.getCoordinateFromId(this.current_field.id );
+
+	let target_width = 0;
+	let target_height = 0;
+	let target_x = start_coord.x * grid.field_width +1;
+	let target_y = start_coord.y * grid.field_height +1;
+	let ratio = 0;
+
+
+	if (grid.field_width > grid.field_height)
+	{
+		let ratio = this.enemyImage.width / this.enemyImage.height;
+		target_height = (grid.field_height - 2) / 2 ;
+		target_width = target_height * ratio;
+		target_x += (grid.field_width / 2) - (target_width / 2);
+		target_y += (grid.field_height/2) - (target_height/2);
+
+
+	}
+	else {
+		let ratio = this.enemyImage.height / this.enemyImage.width;
+		target_width = (grid.field_width - 2) / 2;
+		target_height = target_width * ratio;
+		target_x += (grid.field_width / 2) - (target_width / 2);
+		target_y += (grid.field_height/2) - (target_height/2);
+	}
+target_x+=2;										//hier stimmen die Werte noch nicht. Es wird noch zu viel überzeichnet		original:2,2,4,4
+target_y+=2;
+target_width-=4;
+target_height-=4;
+
+
+/*	this.enemyImage.onload = () =>
+	{
+		grid.ctx.drawImage( this.enemyImage, target_x, target_y, target_width, target_height);
+	}
+*/
+grid.ctx.drawImage(this.enemyImage, target_x, target_y, target_width, target_height);
+
+
+
+}
+
+Enemy.prototype.move = function( grid,  direction ) {
+	let backgroundColor = "#000000"
+
+//überschüssige Zeilen losgeworden
+	if( this.current_field.neighbors[ direction ] === null )
+	{
+		switch (direction)
+		{
+			case MOVE_NORTH:
+				console.log("Du kannst nicht nach Norden gehen!");
+				break;
+			case MOVE_EAST:
+				console.log("Du kannst nicht nach Osten gehen!");
+				break;
+			case MOVE_SOUTH:
+				console.log("Du kannst nicht nach Süden gehen!");
+				break;
+			case MOVE_WEST:
+				console.log("Du kannst nicht nach Westen gehen!");
+				break;
+		}
+
+	} else
+	{
+		let old_position = grid.getCoordinateFromId( this.current_field.id);
+		grid.ctx.fillStyle=backgroundColor;
+		grid.ctx.fillRect(
+			old_position.x * grid.field_width + 1,
+			old_position.y * grid.field_height + 1,
+			grid.field_width -2,
+			grid.field_height -2,
+		);
+
+		//
+		if( this.current_field.item )
+		{
+			this.item = this.current_field.item;
+			this.current_field.item = null;
+		}
+		this.current_field.drawField( grid );
+
+		//
+
+		this.current_field = this.current_field.neighbors[ direction ];
+		this.drawEnemyPosition(grid);
+	}
 }

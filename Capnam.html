@@ -7,8 +7,10 @@
 
 <body onload="game = neuesLevel()">     <!-- Spielfeld erstellen ohne Knopfdruck und in der game Variable für später speichern-->
   <script src='js/Grid.js'></script>
-  <script src='js/maze.js'></script>
+
   <script src='js/fields.js'></script>
+  <script src='js/maze.js'></script>
+
   <script src='js/player.js'></script>
   <script src='js/item.js'></script>
 
@@ -22,6 +24,7 @@
   <input type="text" id="zuege" value= "0 Zuege gemacht" readonly>
     <input type="text" id="leben" value= "" readonly>      <!--lebensanzeiger: Value wird bei player.prototype.init gesetzt -->
       <input type="text" value="Punkte: 00" id="punkte" readonly >
+
 
 
   <br>
@@ -58,17 +61,24 @@ function neuesLevel()
        var grid = new Grid( cvs, dim );   // später noch eine Begrenzung einbauen
        const maze = createMaze(grid);     //verursachte einen Fehler. Deshalb was anderes Probiert
        var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
+       var enemy1 = new Enemy ( "enemy1", getRandomField(grid, maze));
 //       grid.drawGrid(maze,player1);
       player1.playerImage.onload = ()=>
-{
-  player1.drawPlayerPosition( grid );
-}
+        {
+          player1.drawPlayerPosition( grid );
+        }
+        enemy1.enemyImage.onload = ()=>
+        {
+          enemy1.drawEnemyPosition( grid );
+        }
       clear(ctx);
       maze.flat().forEach(field => field.drawField(grid) )
       player1.drawPlayerPosition( grid );
+      enemy1.drawEnemyPosition( grid );
 //       grid.drawFieldNumbers();
-      document.getElementById('punkte').value ="Punkte: 00";
-      return { player: player1, grid: grid, maze: maze }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
+      Punkte = 0;
+      document.getElementById('punkte').value ="Punkte: 00"
+      return { player: player1, enemy: enemy1, grid: grid, maze: maze }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
 
 
      }
@@ -132,15 +142,36 @@ document.body.onkeydown = keyDown;
 function keyDown( evt )
 {
 	let defined_keys = ["ArrowUp","ArrowRight", "ArrowDown" ,"ArrowLeft"]
+  // funktioniert zwar aber gibt probleme beim neuzeichnen
+/*  if (evt.key == defined_keys[0])
+  {
+    game.player.playerImage.src = 'img/capnam_o.png';
+  }
 
-	console.log( evt.key );
+  if (evt.key == defined_keys[1])
+  {
+    game.player.playerImage.src = 'img/capnam.png';
+  }
 
+  if (evt.key == defined_keys[2])
+  {
+    game.player.playerImage.src = 'img/capnam_u.png';
+  }
+
+  if (evt.key == defined_keys[3])
+  {
+    game.player.playerImage.src = 'img/capnam_l.png';
+  }
+
+*/
 
 // hier habe ich einen bewegungs counter eingefügt (bewegung++) und der wird nur ausgeführt, wenn "move" ausgeführt wird.
 
 	if ( defined_keys.includes( evt.key ) )
    {
 		let direction = defined_keys.indexOf( evt.key ) ;
+    console.log(direction);
+
 		game.player.move( game.grid, direction );   //konnte bisher nicht auf den player1 zugreifen. daher jetzt game.player1. Danach grid aus der Variable game genommen (game.grid)
 
 

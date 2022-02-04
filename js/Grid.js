@@ -77,10 +77,6 @@ Grid.prototype.drawFieldNumbers = function( )
 }
 
 
-
-
-
-
 Grid.prototype.getStart = function(maze)
 {
 	for (y = 0; y < this.number_of_fields; y++)

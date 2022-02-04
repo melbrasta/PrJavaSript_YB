@@ -246,7 +246,7 @@ function getDirections ( grid, current_field, visited_fields ) {
 // Funktion gibt aus dem Labyrinth ein zufälliges Feld zurück
 //
 //
-function getRandomField( grid, field_array ) {
+function getRandomField( grid, maze ) {
 	let total_fields = grid.number_of_fields**2;
 	let random_field = parseInt( Math.random() * total_fields );
 
