@@ -12,18 +12,6 @@ var Player = function( name, current_field, lives, rotate) {						//changed colo
 }
 
 
-/*
-score = 0;
-
-function score()
-{
-	score =+10;
-	document.getElementById('punkte').value = score;
-}
-*/
-
-
-
 
 Player.prototype.init = function()
 {

@@ -109,7 +109,7 @@ field_array[0] [field_array.length -1].neighbors[MOVE_EAST] = field_array[0] [0]
 
 
 //sollte eigentlich zufällige zusatzwege erschaffen...
-/*
+
 for( let y  = 1; y < field_array.length - 1; y++ )
 {
 	for( let x = 1; x < field_array[y].length -1; x++) {
@@ -133,7 +133,7 @@ for( let y  = 1; y < field_array.length - 1; y++ )
 		}
 	}
 }
-*/
+
 
 		let start_x = Math.min( current_coord.x, target_coord.x ) ;
 		let start_y = Math.min( current_coord.y, target_coord.y ) ;
