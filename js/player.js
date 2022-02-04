@@ -18,6 +18,9 @@ function sound(src)
 var tok;
 tok = new sound("tok.mp3");
 
+var scream;
+scream = new sound("scream.mp3");
+
 
 
 var Player = function( name, current_field, lives, rotate) {						//changed color to Live attribute
@@ -123,12 +126,13 @@ Player.prototype.move = function( grid,  direction ) {
 						break;
 				case 0:
 						document.getElementById('leben').value = "Tot	†";
+            scream.play();
 						clear(ctx);
 						game = neuesLevel();
 						break;
 		}
 
-		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");					//vllt klappt es mit der wand einreißen
+		alert("Mit dem Kopf durch die Wand tut weh. Das kostet dich ein Leben");					//vllt klappt es mit der wand einreißen ja wirklich
 	} else
 	{
 		let old_position = grid.getCoordinateFromId( this.current_field.id);
