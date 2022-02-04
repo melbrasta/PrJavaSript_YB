@@ -3,9 +3,21 @@ const MOVE_EAST = 1;
 const MOVE_SOUTH = 2;
 const MOVE_WEST = 3;
 
-var Field = function(id) {
+
+const FIELD_TYPE_UNKNOWN = 0;
+const FIELD_TYPE_STARTFIELD = 1;
+const FIELD_TYPE_ENDFIELD = 2;
+const FIELD_TYPE_TRAP = 3;
+
+var Field = function(id, grid)
+{
 	this.id = id;
+	this.type = FIELD_TYPE_UNKNOWN;
+//	this.pos = grid.getCoordinateFromId( id );
 	this.neighbors = [null,null,null,null];
+	this.item = null;
+
+
 }
 
 

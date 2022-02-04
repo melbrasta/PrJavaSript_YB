@@ -108,7 +108,7 @@ field_array[0] [field_array.length -1].neighbors[MOVE_EAST] = field_array[0] [0]
 
 
 
-//sollte eigentlich zufällige zusatzwege erschaffen...
+//zufällige zusatzwege
 
 for( let y  = 1; y < field_array.length - 1; y++ )
 {

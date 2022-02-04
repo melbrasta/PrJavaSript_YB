@@ -11,7 +11,25 @@ var Player = function( name, current_field, lives, rotate) {						//changed colo
 
 }
 
+function sound(src)
+{
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+}
+  	this.stop = function()
+		{
+    	this.sound.pause();
+  	}
+}
 
+var tok;
+tok = new sound("tok.mp3");
 
 Player.prototype.init = function()
 {
@@ -87,6 +105,7 @@ Player.prototype.move = function( grid,  direction ) {
 				console.log("Du kannst nicht nach Westen gehen!");
 				break;
 		}
+		tok.play();
 		this.lives -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
 		score_less();										//Punkte weniger bei Lebensverlust
 		switch(this.lives)

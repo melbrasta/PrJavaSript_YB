@@ -10,6 +10,7 @@
   <script src='js/maze.js'></script>
   <script src='js/fields.js'></script>
   <script src='js/player.js'></script>
+  <script src='js/item.js'></script>
 
 
   <h1 class="intro">This is Capnam</h1>
@@ -44,26 +45,29 @@ let ctx = cvs.getContext("2d");
 //    alert ("Hier kurz die Regeln und Steuerung: \nBewegungen mit w,a,s,d auf der Tastatur\nZiel des Spiels: Überleben und viele Punkte machen")             //hier noch die genaueren Voraussetzungen einfügen
 
 
+var item = new Item( "Coin", ITEM_TYPE_COIN, 'img/coin.png' );
+// var itemFeld = getRandomField();     //getRandomField geht nicht
+//itemFeld.item = item;
+
 
 function neuesLevel()
      {
        start_time = new Date().getTime();
-
        let dim = document.getElementById('dimensions').value;
 
        var grid = new Grid( cvs, dim );   // später noch eine Begrenzung einbauen
        const maze = createMaze(grid);     //verursachte einen Fehler. Deshalb was anderes Probiert
        var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
 //       grid.drawGrid(maze,player1);
-    player1.playerImage.onload = ()=>
+      player1.playerImage.onload = ()=>
 {
   player1.drawPlayerPosition( grid );
 }
-clear(ctx);
-maze.flat().forEach(field => field.drawField(grid) )
-       player1.drawPlayerPosition( grid );
+      clear(ctx);
+      maze.flat().forEach(field => field.drawField(grid) )
+      player1.drawPlayerPosition( grid );
 //       grid.drawFieldNumbers();
-document.getElementById('punkte').value ="Punkte: 00";
+      document.getElementById('punkte').value ="Punkte: 00";
       return { player: player1, grid: grid, maze: maze }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
 
 
