@@ -53,11 +53,13 @@ target_x+=2;										//hier stimmen die Werte noch nicht. Es wird noch zu viel 
 target_y+=2;
 target_width-=4;
 target_height-=4;
-	this.playerImage.onload = () =>
+
+
+/*	this.playerImage.onload = () =>
 	{
 		grid.ctx.drawImage( this.playerImage, target_x, target_y, target_width, target_height);
 	}
-
+*/
 grid.ctx.drawImage(this.playerImage, target_x, target_y, target_width, target_height);
 
 
@@ -100,7 +102,7 @@ Player.prototype.move = function( grid,  direction ) {
 						break;
 				case 0:
 						document.getElementById('leben').value = "Tot	†";
-						neuesLevel();
+						game = neuesLevel();
 						break;
 		}
 

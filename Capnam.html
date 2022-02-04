@@ -48,18 +48,23 @@ let ctx = cvs.getContext("2d");
 function neuesLevel()
      {
        start_time = new Date().getTime();
-       clear(ctx);
+
        let dim = document.getElementById('dimensions').value;
 
        var grid = new Grid( cvs, dim );   // später noch eine Begrenzung einbauen
        const maze = createMaze(grid);     //verursachte einen Fehler. Deshalb was anderes Probiert
        var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
 //       grid.drawGrid(maze,player1);
+    player1.playerImage.onload = ()=>
+{
+  player1.drawPlayerPosition( grid );
+}
+clear(ctx);
 maze.flat().forEach(field => field.drawField(grid) )
        player1.drawPlayerPosition( grid );
 //       grid.drawFieldNumbers();
 document.getElementById('punkte').value ="Punkte: 00";
-      return { player: player1, grid: grid }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
+      return { player: player1, grid: grid, maze: maze }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
 
 
      }
