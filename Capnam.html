@@ -7,15 +7,13 @@
 
 <body onload="game = neuesLevel();setInterval (displayTime, 1000,document.getElementById('time')) ;setInterval (score_time, 3500)">     <!-- Spielfeld erstellen ohne Knopfdruck und in der game Variable für später speichern-->
   <script src='js/Grid.js'></script>
-
   <script src='js/fields.js'></script>
-  <script src='js/maze.js'></script>
-
+  <script src='js/function.js'></script>
   <script src='js/player.js'></script>
 
 
-  <h1 class="intro">This is Capnam</h1>
-  <h2 class="intro2">EAT catch REPEAT</h2>
+  <h1>This is Capnam</h1>
+  <h2>EAT catch REPEAT</h2>
   <br>
   <input type="text" value="" id="time" readonly >
   <br>
@@ -44,171 +42,17 @@
   <script>
 var cvs = document.getElementById('cvs');
 let ctx = cvs.getContext("2d");
-    alert ("Regeln und Steuerung: \nBewegungen werden mit den Pfeiltasten auf der Tastatur durchgeführt. \nBeachte dass der Gegner jede deiner Bewegungen doppelt ausführt, sofern er die Möglichkeit dazu hat.\n\nZiel des Spiels: \nFang den blauen Gegner innerhalb des Zeitlimits von 10 Sekunden\n\nHinweis: \nIn den vier Ecken des Spielfeldes befindet sich ein Tunnel zur gegenüberliegenden Seite.")             //hier noch die genaueren Voraussetzungen einfügen
-
-
-function neuesLevel()
-     {
-       start_time = new Date().getTime();
-       let dim = document.getElementById('dimensions').value;
-       if (dim > 20)
-       {
-         alert("nicht übertreiben. Bei 20 ist Schluss");
-         document.getElementById('dimensions').value = 20;
-        dim = 20;
-       }
-
-       var grid = new Grid( cvs, dim );
-       const maze = createMaze(grid);
-       var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
-       var enemy1 = new Enemy ( "enemy1", enemypos = getRandomField(grid, maze));
-      player1.playerImage.onload = ()=>
-        {
-          player1.drawPlayerPosition( grid );
-        }
-        enemy1.enemyImage.onload = ()=>
-        {
-          enemy1.drawEnemyPosition( grid );
-        }
-      clear(ctx);
-      maze.flat().forEach(field => field.drawField(grid) )
-      player1.drawPlayerPosition( grid );
-      enemy1.drawEnemyPosition( grid );
-      Punkte = 0;
-      document.getElementById('punkte').value ="Punkte: 00"
-      return { player: player1, enemy: enemy1, grid: grid, maze: maze }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
-
-
-     }
-
-
-
-function gameend()
-{
-  document.getElementById('punkte').value = Punkte;
-  alert("Geschafft. Du hast den blauen badnam gefangen"+"\nDu hast "+ Punkte + " Punkte erreicht.\nDabei hattest du noch "+game.player.lives +" Leben über");
-  game = neuesLevel();
-
-}
-
-
-function clear (ctx)
-{
-ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
-}
-
-//StartZeit und aktuelle Zeit als Variablen
-
-    var start_time = new Date().getTime();
-    var current_time = new Date().getTime();
-
-    function displayTime(input_field)
-    {
-
-    		current_time = new Date().getTime();
-
-
-    		let delta_t = parseInt((current_time - start_time) / 1000);
-    		let delta_m = parseInt( delta_t / 60);
-    		let delta_s = delta_t % 60;
-
-    		delta_m = delta_m < 10 ? ("0"+delta_m) : delta_m;
-    		delta_s = delta_s < 10 ? ("0"+delta_s) : delta_s;
-
-    		let zeittext =`Zeit ${delta_m}:${delta_s}`;
-    		input_field.value = zeittext
-
-        if (delta_s == 10)
-        {
-          alert("Du warst leider zu langsam. Versuch es nochmal");
-          game = neuesLevel();
-        }
-    	}
-
-
-
-
-
-
-
-
-
-
+var start_time = new Date().getTime();
+var current_time = new Date().getTime();
+var tok;
+tok = new sound("tok.mp3");
+var scream;
+scream = new sound("scream.mp3");
 Punkte = 0;
-function score_move ()
-{
-  Punkte +=5;
-  document.getElementById('punkte').value ="Punkte: " + Punkte;
-}
-
-function score_less ()
-{
-  Punkte -=50;
-  document.getElementById('punkte').value ="Punkte: " + Punkte;
-}
-
-
-function score_time ()
-{
-  Punkte -=20;
-  document.getElementById('punkte').value ="Punkte: " + Punkte;
-}
-
-
-
-
-
 cvs.onkeydown = keyDown;
 document.body.onkeydown = keyDown;
 
-
-
-//keybindings
-function keyDown( evt )
-{
-	let defined_keys = ["ArrowUp","ArrowRight", "ArrowDown" ,"ArrowLeft"]
-
-/*
-  // funktioniert zwar aber gibt probleme beim neuzeichnen
-  if (evt.key == defined_keys[0])
-  {
-    game.player.playerImage.src = 'img/capnam_o.png';
-  }
-
-  if (evt.key == defined_keys[1])
-  {
-    game.player.playerImage.src = 'img/capnam.png';
-  }
-
-  if (evt.key == defined_keys[2])
-  {
-    game.player.playerImage.src = 'img/capnam_u.png';
-  }
-
-  if (evt.key == defined_keys[3])
-  {
-    game.player.playerImage.src = 'img/capnam_l.png';
-  }
-
-*/
-// hier habe ich einen bewegungs counter eingefügt (bewegung++) und der wird nur ausgeführt, wenn "move" ausgeführt wird.
-
-	if ( defined_keys.includes( evt.key ) )
-   {
-		let direction = defined_keys.indexOf( evt.key ) ;
-
-		game.player.move( game.grid, direction );   //konnte bisher nicht auf den player1 zugreifen. daher jetzt game.player. Danach grid aus der Variable game genommen (game.grid)
-    game.enemy.move( game.grid, direction );
-    game.enemy.move( game.grid, direction );
-
-
-// das html input feld mit der id "zuege" soll den Wert von bewegungen bekommen!!  id ansprechen
-    document.getElementById('zuege').value = game.player.steps_done + " Zuege gemacht";
-		evt.preventDefault();
-	}
-}
-
-
+alert ("Regeln und Steuerung: \nBewegungen werden mit den Pfeiltasten auf der Tastatur durchgeführt. \nBeachte dass der Gegner jede deiner Bewegungen doppelt ausführt, sofern er die Möglichkeit dazu hat.\n\nZiel des Spiels: \nFang den blauen Gegner innerhalb des Zeitlimits von 10 Sekunden\n\nHinweis: \nIn den vier Ecken des Spielfeldes befindet sich ein Tunnel zur gegenüberliegenden Seite. Alle anderen Wände tun weh")             //hier noch die genaueren Voraussetzungen einfügen
 
   </script>
   </body>

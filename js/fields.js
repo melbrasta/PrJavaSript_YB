@@ -25,24 +25,28 @@ var Field = function(id, grid)
 
 
 
-Field.prototype.setNorth = function( north ) {
+Field.prototype.setNorth = function( north )
+{
 	this.neighbors[0] = north;
 	north.neighbors[ MOVE_SOUTH ] = this;
 }
 
-Field.prototype.setEast = function( east ) {
+Field.prototype.setEast = function( east )
+{
 	this.neighbors[1] = east;
 	east.neighbors[ MOVE_WEST] = this;
 
 }
 
-Field.prototype.setSouth = function( south ) {
+Field.prototype.setSouth = function( south )
+{
 	this.neighbors[2] = south;
 	south.neighbors[MOVE_NORTH] = this;
 
 }
 
-Field.prototype.setWest = function( west ) {
+Field.prototype.setWest = function( west )
+{
 	this.neighbors[3] = west;
 	west.neighbors[MOVE_EAST] = this;
 }
@@ -52,35 +56,10 @@ Field.prototype.setWest = function( west ) {
 // gibt NULL zurück, wenn wir nicht in die Richtung gehen können
 //
 //
-Field.prototype.move = function( direction ) {
+Field.prototype.move = function( direction )
+{
 	return this.neighbors[direction];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //
 //Zeichnet Wände an den seiten ein, an denen es keinen Nachbarn gibt
 //
@@ -97,9 +76,6 @@ Field.prototype.drawField = function (grid)
 		grid.ctx.moveTo(border.x * grid.field_width, border.y * grid.field_height);
 		grid.ctx.lineTo(( 1 + border.x) * grid.field_width, border.y * grid.field_height);
 		grid.ctx.stroke();
-
-
-
 	}
 	if (!this.neighbors[1])
 	{
@@ -125,17 +101,10 @@ Field.prototype.drawField = function (grid)
 		grid.ctx.moveTo ( border.x* grid.field_width, border.y * grid.field_height);
 		grid.ctx.lineTo( border.x * grid.field_width,(1 + border.y )* grid.field_height);
 		grid.ctx.stroke();
-
-
 	}
-
-
-
 
 	if(this.item)
 	{
 	grid.ctx.drawImage (this.item.img,  border.x* grid.field_width,border.y * grid.field_height,grid.field_width /2, grid.field_height / 2);
 	}
-
-
 }

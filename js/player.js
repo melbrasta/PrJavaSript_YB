@@ -1,29 +1,5 @@
-function sound(src)
-{
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  document.body.appendChild(this.sound);
-  this.play = function(){
-    this.sound.play();
-}
-  	this.stop = function()
-		{
-    	this.sound.pause();
-  	}
-}
-
-var tok;
-tok = new sound("tok.mp3");
-
-var scream;
-scream = new sound("scream.mp3");
-
-
-
-var Player = function( name, current_field, lives, rotate) {						//changed color to Live attribute
+var Player = function( name, current_field, lives, rotate)
+{						//changed color to Live attribute
 	this.name = name;
 	this.current_field = current_field;
 	this.lives = lives;
@@ -44,7 +20,8 @@ Player.prototype.init = function()
 }
 
 
-Player.prototype.drawPlayerPosition = function (grid) {
+Player.prototype.drawPlayerPosition = function (grid)
+{
 	var start_coord = grid.getCoordinateFromId(this.current_field.id );
 
 	let target_width = 0;
@@ -84,7 +61,8 @@ grid.ctx.drawImage(this.playerImage, target_x, target_y, target_width, target_he
 
 }
 
-Player.prototype.move = function( grid,  direction ) {
+Player.prototype.move = function( grid,  direction )
+{
 	let backgroundColor = "#000000"
 
 //überschüssige Zeilen losgeworden
@@ -178,7 +156,8 @@ Enemy.prototype.init = function()
 }
 
 
-Enemy.prototype.drawEnemyPosition = function (grid) {					//brauche neue zufällige Position
+Enemy.prototype.drawEnemyPosition = function (grid)
+{					//brauche neue zufällige Position
 	var start_coord = grid.getCoordinateFromId(this.current_field.id );
 
 	let target_width = 0;
@@ -215,7 +194,8 @@ grid.ctx.drawImage(this.enemyImage, target_x, target_y, target_width, target_hei
 
 }
 
-Enemy.prototype.move = function( grid,  direction ) {
+Enemy.prototype.move = function( grid,  direction )
+{
 	let backgroundColor = "#000000"
 
 	if( this.current_field.neighbors[ direction ] === null )

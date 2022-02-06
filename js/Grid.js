@@ -10,7 +10,6 @@ this.field_height = this.cvs.height / number_of_fields;
 
 }
 
-
 Grid.prototype.getCoordinateFromId = function( field_id )
 {
 	return {
@@ -19,11 +18,8 @@ Grid.prototype.getCoordinateFromId = function( field_id )
 	};
 }
 
-
-
-
 //Drawgrid
-Grid.prototype.drawGrid = function(fields,player)        //hier später noch den Spieler angeben
+Grid.prototype.drawGrid = function(fields,player)
 {
 
 
