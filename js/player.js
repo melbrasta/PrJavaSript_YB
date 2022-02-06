@@ -1,4 +1,4 @@
-var Player = function( name, current_field, lives, rotate)
+let Player = function( name, current_field, lives, rotate)
 {						//changed color to Live attribute
 	this.name = name;
 	this.current_field = current_field;
@@ -22,7 +22,7 @@ Player.prototype.init = function()
 
 Player.prototype.drawPlayerPosition = function (grid)
 {
-	var start_coord = grid.getCoordinateFromId(this.current_field.id );
+	let start_coord = grid.getCoordinateFromId(this.current_field.id );
 
 	let target_width = 0;
 	let target_height = 0;
@@ -140,7 +140,7 @@ Player.prototype.move = function( grid,  direction )
 }
 // Gegner
 
-var Enemy = function(name, current_field, catched)
+let Enemy = function(name, current_field, catched)
 {
 	this.name = name;
 	this.current_field = enemypos;
@@ -158,7 +158,7 @@ Enemy.prototype.init = function()
 
 Enemy.prototype.drawEnemyPosition = function (grid)
 {					//brauche neue zufällige Position
-	var start_coord = grid.getCoordinateFromId(this.current_field.id );
+	let start_coord = grid.getCoordinateFromId(this.current_field.id );
 
 	let target_width = 0;
 	let target_height = 0;
