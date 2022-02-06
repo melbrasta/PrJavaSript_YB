@@ -31,7 +31,7 @@
   <canvas id='cvs' width='800px' height='800px' style="background-color:#000000 ;border: 2px solid #000000;"></canvas>
   <br>
   <input type="number" id="dimensions" value="10" placeholder="neue größe?(Anzahl Felder)">   <!-- eine 10 für die automatische Levelgenerierung -->
-  <button onclick="var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)'); game = neuesLevel()">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
+  <button onclick="game = neuesLevel();var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)')">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
   <input type="button" value="Test" onclick="game = neuesLevel()">  <!-- jetzt: game = neuesLevel-->
   <img src="img/capnam.png" style="display: none">
   <img src="img/capnam_u.png" style="display: none">
@@ -48,21 +48,21 @@ let ctx = cvs.getContext("2d");
     alert ("Hier kurz die Regeln und Steuerung: \nBewegungen mit w,a,s,d auf der Tastatur\nZiel des Spiels: Überleben und viele Punkte machen")             //hier noch die genaueren Voraussetzungen einfügen
 
 
-var item = new Item( "Coin", ITEM_TYPE_COIN, 'img/coin.png' );
-// var itemFeld = getRandomField();     //getRandomField geht nicht
-//itemFeld.item = item;
-
-
 function neuesLevel()
      {
        start_time = new Date().getTime();
        let dim = document.getElementById('dimensions').value;
+       if (dim > 20)
+       {
+         alert("nicht übertreiben. Bei 20 ist Schluss");
+         document.getElementById('dimensions').value = 20;
+        dim = 20;
+       }
 
-       var grid = new Grid( cvs, dim );   // später noch eine Begrenzung einbauen
-       const maze = createMaze(grid);     //verursachte einen Fehler. Deshalb was anderes Probiert
+       var grid = new Grid( cvs, dim );
+       const maze = createMaze(grid);
        var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
        var enemy1 = new Enemy ( "enemy1", getRandomField(grid, maze));
-//       grid.drawGrid(maze,player1);
       player1.playerImage.onload = ()=>
         {
           player1.drawPlayerPosition( grid );
@@ -75,7 +75,6 @@ function neuesLevel()
       maze.flat().forEach(field => field.drawField(grid) )
       player1.drawPlayerPosition( grid );
       enemy1.drawEnemyPosition( grid );
-//       grid.drawFieldNumbers();
       Punkte = 0;
       document.getElementById('punkte').value ="Punkte: 00"
       return { player: player1, enemy: enemy1, grid: grid, maze: maze }    // player und grid zurück geben, sodass man es überall hat (in der variable game)
@@ -172,7 +171,7 @@ function keyDown( evt )
 		let direction = defined_keys.indexOf( evt.key ) ;
     console.log(direction);
 
-		game.player.move( game.grid, direction );   //konnte bisher nicht auf den player1 zugreifen. daher jetzt game.player1. Danach grid aus der Variable game genommen (game.grid)
+		game.player.move( game.grid, direction );   //konnte bisher nicht auf den player1 zugreifen. daher jetzt game.player. Danach grid aus der Variable game genommen (game.grid)
 
 
 // das html input feld mit der id "zuege" soll den Wert von bewegungen bekommen!!  id ansprechen

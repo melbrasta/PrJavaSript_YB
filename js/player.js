@@ -284,3 +284,66 @@ Enemy.prototype.move = function( grid,  direction ) {
 		this.drawEnemyPosition(grid);
 	}
 }
+
+
+
+function destroywall()
+{
+
+
+	   for( let x = 1; x < field_array[y].length -1; x++) {
+		     if( Math.random() < 0.75 ) {
+			        let rnd = parseInt( Math.random() * 4 );
+			           switch( rnd ) {
+				               case MOVE_NORTH:
+					                  field_array[y][x].setNorth( field_array[y-1][x] ) ;
+				                        break;
+				                            case MOVE_EAST:
+					                               field_array[y][x].setEast( field_array[y][x+1] ) ;
+				                                     break;
+				                                         case MOVE_SOUTH:
+					                                            field_array[y][x].setSouth( field_array[y+1][x] ) ;
+				                                                  break;
+				                                                      case MOVE_WEST:
+					                                                         field_array[y][x].setWest( field_array[y][x-1] ) ;
+				                                                               break;
+
+			}
+		}
+	}
+
+
+
+		let start_x = Math.min( current_coord.x, target_coord.x ) ;
+		let start_y = Math.min( current_coord.y, target_coord.y ) ;
+
+		let target_x = Math.max( current_coord.x, target_coord.x );
+		let target_y = Math.max( current_coord.y, target_coord.y );
+
+
+
+		//
+		// Überzeichnet die Rechtecke und stellt grafisch die Verbindungen der einzelnen Felder dar
+		//
+
+		if( start_x != target_x ) {
+			grid.ctx.fillRect( 	start_x * grid.field_width + 1
+							,  	start_y * grid.field_height + 1
+							,   grid.field_width * 2 - 2
+							,   grid.field_height - 2);
+		}
+		if( start_y != target_y ) {
+			grid.ctx.fillRect( 	start_x * grid.field_width + 1
+							,  	start_y * grid.field_height + 1
+							,   grid.field_width - 2
+							,   grid.field_height * 2 -2 );
+		}
+
+
+		grid.ctx.fillRect( 	start_x * grid.field_width + 1
+						,  	start_y * grid.field_height + 1
+						,   grid.field_width  * (start_x != target_x ? 2 : 1) - 2
+						,   grid.field_height * (start_y != target_y ? 2 : 1) - 2);
+
+
+}

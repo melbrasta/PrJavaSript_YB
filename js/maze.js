@@ -167,26 +167,10 @@ for( let y  = 1; y < field_array.length - 1; y++ )
 						,   grid.field_height * (start_y != target_y ? 2 : 1) - 2);
 
 
-
-
-
-//redrawMaze(this.maze, grid);		//function redrawMaze gibt einen Fehler
 field_array.start_field = start_field;			//packt das start_field in das array welches später zugänglich ist
-	return field_array; // Gibt alle Felder zurück
+	return field_array; 											// Gibt alle Felder zurück
 }
 
-
-/*
-function redrawMaze( maze, grid ) {									//function redrawMaze gibt einen Fehler
-	for( let y = 0; y < maze.length; y++){
-		for( let x = 0; x < maze[0].length; x++ ) {
-			maze[y][x].drawField( grid );
-			grid.drawGrid(maze,player1);
-			player1.drawPlayerPosition( grid );
-		}
-	}
-}
-*/
 
 
 function getDirections ( grid, current_field, visited_fields ) {
@@ -234,19 +218,11 @@ function getDirections ( grid, current_field, visited_fields ) {
 			directions[3] = temp_field;
 		}
 	}
-
-
-	//console.log( directions );
 	return directions;
-
 }
 
-
-//
-// Funktion gibt aus dem Labyrinth ein zufälliges Feld zurück
-//
-//
-function getRandomField( grid, maze ) {
+function getRandomField( grid, maze )
+{
 	let total_fields = grid.number_of_fields**2;
 	let random_field = parseInt( Math.random() * total_fields );
 
@@ -255,7 +231,4 @@ function getRandomField( grid, maze ) {
 	var field = maze[ coord.y ][ coord.x ];
 
 	return field;
-
-
-
 }

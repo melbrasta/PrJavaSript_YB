@@ -8,6 +8,8 @@ const FIELD_TYPE_UNKNOWN = 0;
 const FIELD_TYPE_STARTFIELD = 1;
 const FIELD_TYPE_ENDFIELD = 2;
 const FIELD_TYPE_TRAP = 3;
+const FIELD_TYPE_ITEM = 4;
+
 
 var Field = function(id, grid)
 {

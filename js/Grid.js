@@ -50,7 +50,7 @@ Grid.prototype.drawGrid = function(fields,player)        //hier später noch den
 
 
 
-
+/*
 //Felderzahlen zu Testzwecken
 Grid.prototype.drawFieldNumbers = function( )
 {
@@ -75,8 +75,9 @@ Grid.prototype.drawFieldNumbers = function( )
 		}
 	}
 }
+*/
 
-
+/*
 Grid.prototype.getStart = function(maze)
 {
 	for (y = 0; y < this.number_of_fields; y++)
@@ -90,6 +91,7 @@ Grid.prototype.getStart = function(maze)
 		}
 	}
 }
+*/
 
 /*
 Grid.prototype.drawStart = function (maze)
