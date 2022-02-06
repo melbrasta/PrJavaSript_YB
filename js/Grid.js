@@ -1,4 +1,5 @@
-let Grid = function (cvs, number_of_fields) {
+const Grid = function (cvs, number_of_fields)
+{
     this.cvs = cvs;
     this.ctx = this.cvs.getContext('2d');
     this.number_of_fields = Number(number_of_fields);
