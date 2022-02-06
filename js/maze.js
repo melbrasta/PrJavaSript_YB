@@ -51,6 +51,7 @@ function createMaze( grid ) {
 				case MOVE_NORTH:
 				field_array[current_coord.y][current_coord.x].setNorth( field_array[target_coord.y][target_coord.x] );
 				field_array[target_coord.y][target_coord.x].setSouth( field_array[current_coord.y][current_coord.x] );
+				
 				break;
 
 				case MOVE_EAST:

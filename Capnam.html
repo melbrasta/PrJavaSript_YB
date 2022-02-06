@@ -32,6 +32,7 @@
   <br>
   <input type="number" id="dimensions" value="10" placeholder="neue größe?(Anzahl Felder)">   <!-- eine 10 für die automatische Levelgenerierung -->
   <button onclick="game = neuesLevel();var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)')">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
+  <textarea name="hint" id="hint" value="test" rows="2" cols="70"></textarea>
   <img src="img/capnam.png" style="display: none">
   <img src="img/capnam_u.png" style="display: none">
   <img src="img/capnam_o.png" style="display: none">
@@ -44,7 +45,7 @@
   <script>
 var cvs = document.getElementById('cvs');
 let ctx = cvs.getContext("2d");
-    alert ("Hier kurz die Regeln und Steuerung: \nBewegungen mit w,a,s,d auf der Tastatur\nZiel des Spiels: Überleben und viele Punkte machen")             //hier noch die genaueren Voraussetzungen einfügen
+    alert ("Regeln und Steuerung: \nBewegungen werden mit den Pfeiltasten auf der Tastatur durchgeführt. \nBeachte dass der Gegner jede deiner Bewegungen doppelt ausführt, sofern er die Möglichkeit dazu hat.\n\nZiel des Spiels: Fang den blauen Gegner\n\nHinweis: In den vier Ecken des Spielfeldes befindet sich ein Tunnel zur gegenüberliegenden Seite.")             //hier noch die genaueren Voraussetzungen einfügen
 
 
 function neuesLevel()
@@ -57,11 +58,12 @@ function neuesLevel()
          document.getElementById('dimensions').value = 20;
         dim = 20;
        }
-
+       clearInterval(score_time);
        var grid = new Grid( cvs, dim );
        const maze = createMaze(grid);
        var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
-       var enemy1 = new Enemy ( "enemy1", getRandomField(grid, maze));
+       var enemy1 = new Enemy ( "enemy1", enemypos = getRandomField(grid, maze));
+       console.log(enemypos);
       player1.playerImage.onload = ()=>
         {
           player1.drawPlayerPosition( grid );
@@ -80,6 +82,18 @@ function neuesLevel()
 
 
      }
+
+
+
+function gameend()
+{
+  document.getElementById('punkte').value = Punkte;
+  alert("Geschafft. Du hast den blauen badnam gefangen"+"\nDu hast "+ Punkte + " Punkte erreicht.\nDabei hattest du noch "+game.player.lives +" Leben über");
+  game = neuesLevel();
+
+}
+
+
 function clear (ctx)
 {
 ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
@@ -122,7 +136,7 @@ function score_less ()
 
 function score_time ()
 {
-  Punkte +=10;
+  Punkte -=20;
   document.getElementById('punkte').value ="Punkte: " + Punkte;
 }
 
@@ -140,8 +154,10 @@ document.body.onkeydown = keyDown;
 function keyDown( evt )
 {
 	let defined_keys = ["ArrowUp","ArrowRight", "ArrowDown" ,"ArrowLeft"]
+
+/*
   // funktioniert zwar aber gibt probleme beim neuzeichnen
-/*  if (evt.key == defined_keys[0])
+  if (evt.key == defined_keys[0])
   {
     game.player.playerImage.src = 'img/capnam_o.png';
   }
@@ -162,7 +178,6 @@ function keyDown( evt )
   }
 
 */
-
 // hier habe ich einen bewegungs counter eingefügt (bewegung++) und der wird nur ausgeführt, wenn "move" ausgeführt wird.
 
 	if ( defined_keys.includes( evt.key ) )
@@ -170,6 +185,8 @@ function keyDown( evt )
 		let direction = defined_keys.indexOf( evt.key ) ;
 
 		game.player.move( game.grid, direction );   //konnte bisher nicht auf den player1 zugreifen. daher jetzt game.player. Danach grid aus der Variable game genommen (game.grid)
+    game.enemy.move( game.grid, direction );
+    game.enemy.move( game.grid, direction );
 
 
 // das html input feld mit der id "zuege" soll den Wert von bewegungen bekommen!!  id ansprechen

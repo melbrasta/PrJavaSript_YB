@@ -72,17 +72,12 @@ Player.prototype.drawPlayerPosition = function (grid) {
 		target_y += (grid.field_height/2) - (target_height/2);
 	}
 
-target_x+=2;										//hier stimmen die Werte noch nicht. Es wird noch zu viel überzeichnet		original:2,2,4,4
+target_x+=2;
 target_y+=2;
 target_width-=4;
 target_height-=4;
 
 
-/*	this.playerImage.onload = () =>
-	{
-		grid.ctx.drawImage( this.playerImage, target_x, target_y, target_width, target_height);
-	}
-*/
 grid.ctx.drawImage(this.playerImage, target_x, target_y, target_width, target_height);
 
 
@@ -110,6 +105,7 @@ Player.prototype.move = function( grid,  direction ) {
 		this.lives -= 1;																			//Lebensattribut testen. bei Wandkollision leben-1
 		score_less();																					//Punkte weniger bei Lebensverlust
 		switch(this.lives)
+
 		{
 				case 3:
 						document.getElementById('leben').value = "Leben:	♥ ♥ ♥";
@@ -153,17 +149,10 @@ Player.prototype.move = function( grid,  direction ) {
 
 		this.current_field = this.current_field.neighbors[ direction ];
 		this.drawPlayerPosition(grid);
-		try
-		{
-			this.current_field.enter( this ) ; // Enter fehlt hier ja noch. Entweder einbauen oder es kann entfernt werden!
-		} catch (e)
-		{
-			console.log(e)
-		}
 		this.steps_done ++;
 	}
 	if(this.lives >= 0)
-	{								//Lebensattribut testen. bei Wandkollision leben-1
+	{
 	} else
 		{
 			alert("Loooooooooooooooser")
@@ -173,10 +162,11 @@ Player.prototype.move = function( grid,  direction ) {
 }
 // Gegner
 
-var Enemy = function(name, current_field)
+var Enemy = function(name, current_field, catched)
 {
 	this.name = name;
-	this.current_field = current_field;
+	this.current_field = enemypos;
+  this.catched = null;
 	this.init();
 }
 
@@ -215,7 +205,7 @@ Enemy.prototype.drawEnemyPosition = function (grid) {					//brauche neue zufäll
 		target_x += (grid.field_width / 2) - (target_width / 2);
 		target_y += (grid.field_height/2) - (target_height/2);
 	}
-target_x+=2;										//hier stimmen die Werte noch nicht. Es wird noch zu viel überzeichnet		original:2,2,4,4
+target_x+=2;
 target_y+=2;
 target_width-=4;
 target_height-=4;
@@ -223,34 +213,37 @@ target_height-=4;
 
 grid.ctx.drawImage(this.enemyImage, target_x, target_y, target_width, target_height);
 
-
-
 }
 
 Enemy.prototype.move = function( grid,  direction ) {
 	let backgroundColor = "#000000"
 
-//überschüssige Zeilen losgeworden
 	if( this.current_field.neighbors[ direction ] === null )
 	{
+    if (game.enemy.current_field.id == game.player.current_field.id)          //Check: beide Spieler gleiches Feld
+    {
+      Punkte += 100;
+      gameend();
+    }
 		switch (direction)
 		{
 			case MOVE_NORTH:
-				console.log("Du kannst nicht nach Norden gehen!");
+      document.getElementById('hint').value ="Ein guter Anfang. Der Gegner kann nicht nach Norden gehen!";
 				break;
 			case MOVE_EAST:
-				console.log("Du kannst nicht nach Osten gehen!");
+				document.getElementById('hint').value ="Ein guter Anfang. Der Gegner kann nicht nach Osten gehen!";
 				break;
 			case MOVE_SOUTH:
-				console.log("Du kannst nicht nach Süden gehen!");
+				document.getElementById('hint').value ="Ein guter Anfang. Der Gegner kann nicht nach Süden gehen!";
 				break;
 			case MOVE_WEST:
-				console.log("Du kannst nicht nach Westen gehen!");
+				document.getElementById('hint').value ="Ein guter Anfang. Der Gegner kann nicht nach Westen gehen!";
 				break;
 		}
 
 	} else
 	{
+
 		let old_position = grid.getCoordinateFromId( this.current_field.id);
 		grid.ctx.fillStyle=backgroundColor;
 		grid.ctx.fillRect(
@@ -260,15 +253,7 @@ Enemy.prototype.move = function( grid,  direction ) {
 			grid.field_height -2,
 		);
 
-		//
-		if( this.current_field.item )
-		{
-			this.item = this.current_field.item;
-			this.current_field.item = null;
-		}
 		this.current_field.drawField( grid );
-
-		//
 
 		this.current_field = this.current_field.neighbors[ direction ];
 		this.drawEnemyPosition(grid);
@@ -276,35 +261,34 @@ Enemy.prototype.move = function( grid,  direction ) {
 }
 
 
-
+/*
 function destroywall()
 {
+		    	if( this.current_field.neighbors[ direction ] === null )
+          {
+			       switch( dest )
+             {
+				      case DESTROY_NORTH:
+					         field_array[y][x].setNorth( field_array[y-1][x] ) ;
+				               break;
+				     case DESTROY_EAST:
+					   field_array[y][x].setEast( field_array[y][x+1] ) ;
+				               break;
+				     case DESTROY_SOUTH:
+					   field_array[y][x].setSouth( field_array[y+1][x] ) ;
+				               break;
+				     case DESTROY_WEST:
+					   field_array[y][x].setWest( field_array[y][x-1] ) ;
+				               break;
+            }
+
+			   }
+}
 
 
-	   for( let x = 1; x < field_array[y].length -1; x++) {
-		     if( Math.random() < 0.75 ) {
-			        let rnd = parseInt( Math.random() * 4 );
-			           switch( rnd ) {
-				               case MOVE_NORTH:
-					                  field_array[y][x].setNorth( field_array[y-1][x] ) ;
-				                        break;
-				                            case MOVE_EAST:
-					                               field_array[y][x].setEast( field_array[y][x+1] ) ;
-				                                     break;
-				                                         case MOVE_SOUTH:
-					                                            field_array[y][x].setSouth( field_array[y+1][x] ) ;
-				                                                  break;
-				                                                      case MOVE_WEST:
-					                                                         field_array[y][x].setWest( field_array[y][x-1] ) ;
-				                                                               break;
-
-			}
-		}
-	}
 
 
-
-		let start_x = Math.min( current_coord.x, target_coord.x ) ;
+		let start_x = Math.min( grid.current_coord.x, target_coord.x ) ;
 		let start_y = Math.min( current_coord.y, target_coord.y ) ;
 
 		let target_x = Math.max( current_coord.x, target_coord.x );
@@ -334,6 +318,4 @@ function destroywall()
 						,  	start_y * grid.field_height + 1
 						,   grid.field_width  * (start_x != target_x ? 2 : 1) - 2
 						,   grid.field_height * (start_y != target_y ? 2 : 1) - 2);
-
-
-}
+*/
