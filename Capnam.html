@@ -32,7 +32,6 @@
   <br>
   <input type="number" id="dimensions" value="10" placeholder="neue größe?(Anzahl Felder)">   <!-- eine 10 für die automatische Levelgenerierung -->
   <button onclick="game = neuesLevel();var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)')">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
-  <input type="button" value="Test" onclick="game = neuesLevel()">  <!-- jetzt: game = neuesLevel-->
   <img src="img/capnam.png" style="display: none">
   <img src="img/capnam_u.png" style="display: none">
   <img src="img/capnam_o.png" style="display: none">
@@ -169,16 +168,12 @@ function keyDown( evt )
 	if ( defined_keys.includes( evt.key ) )
    {
 		let direction = defined_keys.indexOf( evt.key ) ;
-    console.log(direction);
 
 		game.player.move( game.grid, direction );   //konnte bisher nicht auf den player1 zugreifen. daher jetzt game.player. Danach grid aus der Variable game genommen (game.grid)
 
 
 // das html input feld mit der id "zuege" soll den Wert von bewegungen bekommen!!  id ansprechen
     document.getElementById('zuege').value = game.player.steps_done + " Zuege gemacht";
-
-// ... und in der Konsole ausgegeben
-		console.log(game.player.steps_done, " Zuege gemacht");
 		evt.preventDefault();
 	}
 }

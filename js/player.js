@@ -98,16 +98,12 @@ Player.prototype.move = function( grid,  direction ) {
 		switch (direction)
 		{
 			case MOVE_NORTH:
-				console.log("Du kannst nicht nach Norden gehen!");
 				break;
 			case MOVE_EAST:
-				console.log("Du kannst nicht nach Osten gehen!");
 				break;
 			case MOVE_SOUTH:
-				console.log("Du kannst nicht nach Süden gehen!");
 				break;
 			case MOVE_WEST:
-				console.log("Du kannst nicht nach Westen gehen!");
 				break;
 		}
 		tok.play();
@@ -168,7 +164,6 @@ Player.prototype.move = function( grid,  direction ) {
 	}
 	if(this.lives >= 0)
 	{								//Lebensattribut testen. bei Wandkollision leben-1
-		console.log("Du hast aktuell " + this.lives + " Leben")
 	} else
 		{
 			alert("Loooooooooooooooser")
@@ -226,11 +221,6 @@ target_width-=4;
 target_height-=4;
 
 
-/*	this.enemyImage.onload = () =>
-	{
-		grid.ctx.drawImage( this.enemyImage, target_x, target_y, target_width, target_height);
-	}
-*/
 grid.ctx.drawImage(this.enemyImage, target_x, target_y, target_width, target_height);
 
 

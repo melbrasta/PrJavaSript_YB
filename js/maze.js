@@ -16,9 +16,7 @@ function createMaze( grid ) {
 
 	field_array[current_coord.y][current_coord.x] = new Field( current_field );
 
-	let start_field = field_array[current_coord.y][current_coord.x];		//vllt als var speichern??
-
-//	field_array[current_coord.y][current_coord.x].setStart();
+	let start_field = field_array[current_coord.y][current_coord.x];
 	visited_fields.push( current_field );
 	stack.push( current_field );
 
@@ -32,7 +30,6 @@ function createMaze( grid ) {
 		let possible_direction = getDirections( grid, current_field, visited_fields);
 		if( possible_direction.every( item => item === false ) ) {
 			current_field = stack.pop();
-			console.log(`keine Richtung möglich-gehe zurück zu Feld ${current_field}`);
 			continue;
 		}
 
@@ -79,7 +76,6 @@ function createMaze( grid ) {
 
 		visited_fields.push( target_field);
 		stack.push( target_field );
-		console.log( `gehe zu Feld: ${target_field}` );
 		current_field = target_field;
 
 //	goal = getCoordinateFromId(grid, target_field);
