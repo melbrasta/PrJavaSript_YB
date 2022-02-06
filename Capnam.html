@@ -5,7 +5,7 @@
 <link rel="icon" type="image/x-icon" href="img/capnam.png">   <!-- favicon -->
 </head>
 
-<body onload="game = neuesLevel()">     <!-- Spielfeld erstellen ohne Knopfdruck und in der game Variable für später speichern-->
+<body onload="game = neuesLevel();setInterval (displayTime, 1000,document.getElementById('time')) ;setInterval (score_time, 3500)">     <!-- Spielfeld erstellen ohne Knopfdruck und in der game Variable für später speichern-->
   <script src='js/Grid.js'></script>
 
   <script src='js/fields.js'></script>
@@ -15,7 +15,7 @@
 
 
   <h1 class="intro">This is Capnam</h1>
-  <h2 class="intro2">EAT collect REPEAT</h2>
+  <h2 class="intro2">EAT catch REPEAT</h2>
   <br>
   <input type="text" value="" id="time" readonly >
   <br>
@@ -31,7 +31,7 @@
   <br>
   <input type="number" id="dimensions" value="10" placeholder="neue größe?(Anzahl Felder)">   <!-- eine 10 für die automatische Levelgenerierung -->
   <button onclick="game = neuesLevel();var eingabe = document.getElementById('dimensions').value; alert(eingabe +' Felder großes neues Spielfeld? Kommt sofort :)')">Erstellen</button>  <!-- jetzt: game=neuesLevel-->
-  <textarea name="hint" id="hint" value="test" rows="2" cols="70"></textarea>
+  <textarea name="hint" id="hint" value="test" rows="2" cols="70" readonly></textarea>
   <img src="img/capnam.png" style="display: none">
   <img src="img/capnam_u.png" style="display: none">
   <img src="img/capnam_o.png" style="display: none">
@@ -44,7 +44,7 @@
   <script>
 var cvs = document.getElementById('cvs');
 let ctx = cvs.getContext("2d");
-    alert ("Regeln und Steuerung: \nBewegungen werden mit den Pfeiltasten auf der Tastatur durchgeführt. \nBeachte dass der Gegner jede deiner Bewegungen doppelt ausführt, sofern er die Möglichkeit dazu hat.\n\nZiel des Spiels: Fang den blauen Gegner\n\nHinweis: In den vier Ecken des Spielfeldes befindet sich ein Tunnel zur gegenüberliegenden Seite.")             //hier noch die genaueren Voraussetzungen einfügen
+    alert ("Regeln und Steuerung: \nBewegungen werden mit den Pfeiltasten auf der Tastatur durchgeführt. \nBeachte dass der Gegner jede deiner Bewegungen doppelt ausführt, sofern er die Möglichkeit dazu hat.\n\nZiel des Spiels: \nFang den blauen Gegner innerhalb des Zeitlimits von 10 Sekunden\n\nHinweis: \nIn den vier Ecken des Spielfeldes befindet sich ein Tunnel zur gegenüberliegenden Seite.")             //hier noch die genaueren Voraussetzungen einfügen
 
 
 function neuesLevel()
@@ -57,12 +57,11 @@ function neuesLevel()
          document.getElementById('dimensions').value = 20;
         dim = 20;
        }
-       clearInterval(score_time);
+
        var grid = new Grid( cvs, dim );
        const maze = createMaze(grid);
        var player1 = new Player ( "player1", maze.start_field, 3);   //später ändern: Farbe brauch ich nicht mehr. Dafür aber Leben
        var enemy1 = new Enemy ( "enemy1", enemypos = getRandomField(grid, maze));
-       console.log(enemypos);
       player1.playerImage.onload = ()=>
         {
           player1.drawPlayerPosition( grid );
@@ -99,6 +98,7 @@ ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
 }
 
 //StartZeit und aktuelle Zeit als Variablen
+
     var start_time = new Date().getTime();
     var current_time = new Date().getTime();
 
@@ -117,7 +117,22 @@ ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
 
     		let zeittext =`Zeit ${delta_m}:${delta_s}`;
     		input_field.value = zeittext
+
+        if (delta_s == 10)
+        {
+          alert("Du warst leider zu langsam. Versuch es nochmal");
+          game = neuesLevel();
+        }
     	}
+
+
+
+
+
+
+
+
+
 
 Punkte = 0;
 function score_move ()
@@ -140,8 +155,7 @@ function score_time ()
 }
 
 
-setInterval (displayTime, 1000, document.getElementById('time'));
-setInterval (score_time, 3500);   //Punkte auf Zeit
+
 
 
 cvs.onkeydown = keyDown;

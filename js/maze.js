@@ -51,7 +51,7 @@ function createMaze( grid ) {
 				case MOVE_NORTH:
 				field_array[current_coord.y][current_coord.x].setNorth( field_array[target_coord.y][target_coord.x] );
 				field_array[target_coord.y][target_coord.x].setSouth( field_array[current_coord.y][current_coord.x] );
-				
+
 				break;
 
 				case MOVE_EAST:
@@ -79,9 +79,6 @@ function createMaze( grid ) {
 		stack.push( target_field );
 		current_field = target_field;
 
-//	goal = getCoordinateFromId(grid, target_field);
-//	field_array[goal.y][goal.x].setGoal();								//Das Ziel muss noch eingeblendet werden
-
 	}
 
 
@@ -100,9 +97,6 @@ field_array[field_array.length -1][field_array.length -1].neighbors[MOVE_SOUTH] 
 
 field_array[0] [field_array.length -1].neighbors[MOVE_NORTH] = field_array[field_array.length -1] [field_array.length -1];	//von oben rechts nach unten rechts
 field_array[0] [field_array.length -1].neighbors[MOVE_EAST] = field_array[0] [0];											//von oben rechts nach oben links
-
-//		grid.ctx.fillStyle="#000000";					//Farbe vom Spielfeld vllt Schwarz besser?
-
 
 
 //zufällige zusatzwege

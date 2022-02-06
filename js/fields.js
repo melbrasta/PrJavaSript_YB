@@ -23,22 +23,6 @@ var Field = function(id, grid)
 }
 
 
-/* start und ziel setzen
-Field.prototype.setStart = function()
-{
-	this.start = true;
-
-}
-
-Field.prototype.setGoal = function()
-{
-	this.goal = true;
-}
-*/
-
-
-
-
 
 
 Field.prototype.setNorth = function( north ) {

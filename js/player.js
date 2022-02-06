@@ -243,6 +243,11 @@ Enemy.prototype.move = function( grid,  direction ) {
 
 	} else
 	{
+    if (game.enemy.current_field.id == game.player.current_field.id)          //Check: beide Spieler gleiches Feld
+    {
+      Punkte += 100;
+      gameend();
+    }
 
 		let old_position = grid.getCoordinateFromId( this.current_field.id);
 		grid.ctx.fillStyle=backgroundColor;
